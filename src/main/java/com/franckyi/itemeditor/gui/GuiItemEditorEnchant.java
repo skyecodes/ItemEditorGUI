@@ -27,6 +27,7 @@ public class GuiItemEditorEnchant extends GuiScreen {
 	private GuiTextField[] enchLevels;
 	private GuiButton cancelButton;
 	private GuiButton doneButton;
+	private GuiButton scrollUp, scrollDown;
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
@@ -66,6 +67,9 @@ public class GuiItemEditorEnchant extends GuiScreen {
 				90, 20, "Done"));
 		buttonList.add(cancelButton = new GuiButton(0, this.width / 2 + 10, (int) (this.height / 2 + this.height / 2.6),
 				90, 20, "Cancel"));
+		buttonList.add(scrollUp = new GuiButton(7, this.width/2 + this.width/3, 60, 50, 20, "Up"));
+		buttonList.add(scrollUp = new GuiButton(8, this.width/2 + this.width/3, height - 80, 50, 20, "Down"));
+		this.enchList.registerScrollButtons(7, 8);
 	}
 
 	@Override

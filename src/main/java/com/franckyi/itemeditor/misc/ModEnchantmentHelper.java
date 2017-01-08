@@ -1,13 +1,14 @@
 package com.franckyi.itemeditor.misc;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
 public class ModEnchantmentHelper {
@@ -78,11 +79,16 @@ public class ModEnchantmentHelper {
 				boolean isSelected) {
 			tf.yPosition = y;
 			tf.drawTextBox();
-			Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
-					y + 5,
-					(ench.type.canEnchantItem(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem()))
-							? 0x00aa00 : 0xffffff);
-
+			if(ench.id == 10 || ench.id == 71) {
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
+					y + 5, 0xaa0000);
+			}else if(ench.type.canEnchantItem(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem())) {
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
+					y + 5, 0x00aa00);
+			}else{
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
+					y + 5, 0xffffff);
+			}
 		}
 
 		@Override
@@ -161,9 +167,8 @@ public class ModEnchantmentHelper {
 
 		public static List<EnchantmentListEntry> getDefaults(int widthIn, int heightIn) {
 			List<EnchantmentListEntry> enchList = new ArrayList<EnchantmentListEntry>();
-			for (EnumEnchantmentList ench : values()) {
+			for (EnumEnchantmentList ench : values())
 				enchList.add(new EnchantmentListEntry(ench.ordinal(), ench, 0, widthIn, heightIn));
-			}
 			return enchList;
 		}
 		
