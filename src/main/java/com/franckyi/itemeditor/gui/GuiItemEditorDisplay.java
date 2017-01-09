@@ -1,18 +1,21 @@
 package com.franckyi.itemeditor.gui;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.misc.HideFlagHelper;
+import com.franckyi.itemeditor.misc.HideFlagHelper.EnumHideFlags;
+import com.franckyi.itemeditor.misc.HideFlagHelper.HideFlag;
 import com.franckyi.itemeditor.misc.SharedContent;
 import com.franckyi.itemeditor.packet.EditItemNameMessage;
 import com.franckyi.itemeditor.packet.ItemEditorPacketHandler;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiItemEditorDisplay extends GuiScreen {
 
@@ -21,6 +24,7 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	private GuiButton formatButton;
 	private GuiButton loreButton;
 	private GuiTextField name;
+	private GuiCheckBox displayEnchants;
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
@@ -49,7 +53,7 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 		drawString(fontRendererObj, "Edit Item Display", this.width / 2 - 40, this.height / 2 - 90, 0xffffff);
-		drawString(fontRendererObj, "Name :", this.width / 2 - 100, this.height / 2 - 33, 0xffffff);
+		drawString(fontRendererObj, "Name :", this.width / 2 - 100, this.height / 2 - 43, 0xffffff);
 		name.drawTextBox();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -57,11 +61,12 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	@Override
 	public void initGui() {
 		ItemStack stack = mc.player.getHeldItemMainhand();
-		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 20, 90, 20, "Done"));
-		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 20, 90, 20, "Cancel"));
-		name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 40, 120, 20);
-		buttonList.add(formatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 40, 20, 20, "§"));
-		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 15, "Edit Lore..."));
+		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 30, 90, 20, "Done"));
+		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 30, 90, 20, "Cancel"));
+		name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 50, 120, 20);
+		buttonList.add(formatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 50, 20, 20, "§"));
+		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 25, "Edit Lore..."));
+		buttonList.add(displayEnchants = new GuiCheckBox(10, this.width / 2 - 100, this.height / 2, " Display Enchantments", true));
 		name.setMaxStringLength(32);
 		if (SharedContent.currentItemName != null) {
 			name.setText(SharedContent.currentItemName);
@@ -91,11 +96,13 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	}
 
 	private void updateServer() {
-		ItemEditorPacketHandler.INSTANCE.sendToServer(new EditItemNameMessage(name.getText()));
+		ItemEditorPacketHandler.INSTANCE.sendToServer(new EditItemNameMessage(name.getText(), Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, displayEnchants.isChecked()))));
 	}
 
 	private void updateClient() {
 		mc.player.getHeldItemMainhand().setStackDisplayName("§r" + name.getText());
+		mc.player.getHeldItemMainhand().getTagCompound().setInteger("HideFlags",
+				HideFlagHelper.value(Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, displayEnchants.isChecked()))));
 	}
 
 	private void switchGui(int id) {
