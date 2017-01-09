@@ -33,6 +33,7 @@ public class GuiItemEditorDisplay extends GuiScreen {
 			updateClient();
 		}
 		if (button == this.cancelButton || button == this.doneButton)
+			SharedContent.clear();
 			switchGui(ItemEditorGuiHandler.ITEM_EDITOR_MENU);
 		if (button == this.formatButton) {
 			name.setText(name.getText() + "§");

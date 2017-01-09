@@ -21,7 +21,7 @@ import net.minecraftforge.fml.client.config.GuiCheckBox;
 public class GuiItemEditorHideFlags extends GuiScreen {
 
 	private List<HideFlag> hideFlags = new ArrayList<HideFlag>();
-	private GuiCheckBox hideEnchants;
+	private GuiCheckBox hideEnchants, hideAttributeModifiers, hideUnbreakable, hideCanDestroy, hideCanBePlacedOn, hidePotionEffects;
 	private GuiButton doneButton, cancelButton;
 
 	@Override
@@ -44,11 +44,20 @@ public class GuiItemEditorHideFlags extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		buttonList.add(
-				hideEnchants = new GuiCheckBox(0, width / 2 - width / 5, height / 2 - 10, " Hide Enchantments", false));
-		buttonList.add(doneButton = new GuiButton(10, this.width / 2 - 100, this.height / 2 + 15, 90, 20, "Done"));
-		buttonList.add(cancelButton = new GuiButton(11, this.width / 2 + 10, this.height / 2 + 15, 90, 20, "Cancel"));
+		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 15, 90, 40, "Done"));
+		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 15, 90, 40, "Cancel"));
+		buttonList.add(hideEnchants = new GuiCheckBox(10, width / 2 - width / 5, height / 2 - 60, " Hide Enchantments", false));
+		buttonList.add(hideAttributeModifiers = new GuiCheckBox(11, width / 2 - width / 5, height / 2 - 45, " Hide Attribute Modifiers", false));
+		buttonList.add(hideUnbreakable = new GuiCheckBox(12, width / 2 - width / 5, height / 2 - 30, " Hide 'Unbreakable'", false));
+		buttonList.add(hideCanDestroy = new GuiCheckBox(13, width / 2 - width / 5, height / 2 - 15, " Hide 'Can Destroy'", false));
+		buttonList.add(hideCanBePlacedOn = new GuiCheckBox(14, width / 2 - width / 5, height / 2 - 0, " Hide 'Can Be Placed On'", false));
+		buttonList.add(hidePotionEffects = new GuiCheckBox(15, width / 2 - width / 5, height / 2 + 15, " Hide Potion Effects", false));
 		hideEnchants.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.ENCHANTMENTS, mc));
+		hideAttributeModifiers.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.MODIFIERS, mc));
+		hideUnbreakable.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.UNBREAKABLE, mc));
+		hideCanDestroy.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.CAN_DESTROY, mc));
+		hideCanBePlacedOn.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.CAN_BE_PLACED_ON, mc));
+		hidePotionEffects.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.CAN_BE_PLACED_ON, mc));
 	}
 
 	@Override
@@ -57,7 +66,12 @@ public class GuiItemEditorHideFlags extends GuiScreen {
 	}
 
 	private void updateServer() {
-		hideFlags = Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, hideEnchants.isChecked()));
+		hideFlags = Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, hideEnchants.isChecked()),
+				new HideFlag(EnumHideFlags.MODIFIERS, hideAttributeModifiers.isChecked()),
+				new HideFlag(EnumHideFlags.UNBREAKABLE, hideUnbreakable.isChecked()),
+				new HideFlag(EnumHideFlags.CAN_DESTROY, hideCanDestroy.isChecked()),
+				new HideFlag(EnumHideFlags.CAN_BE_PLACED_ON, hideCanBePlacedOn.isChecked()),
+				new HideFlag(EnumHideFlags.POTION_EFFECTS, hidePotionEffects.isChecked()));
 		ItemEditorPacketHandler.INSTANCE.sendToServer(new EditItemHideFlagsMessage(hideFlags));
 
 	}

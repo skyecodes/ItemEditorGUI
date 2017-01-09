@@ -38,7 +38,8 @@ public class HideFlagHelper {
 		MODIFIERS(2),
 		UNBREAKABLE(4),
 		CAN_DESTROY(8),
-		CAN_BE_PLACED_ON(16);
+		CAN_BE_PLACED_ON(16),
+		POTION_EFFECTS(32);
 		
 		private int value;
 		
@@ -51,14 +52,6 @@ public class HideFlagHelper {
 				if(value == flag.value)
 					return flag;
 			return null;
-		}
-		
-		public static int getMaxValue(){
-			int max = 0;
-			for(EnumHideFlags flag : values())
-				if(max < flag.value)
-					max = flag.value;
-			return max;
 		}
 		
 	}
