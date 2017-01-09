@@ -51,12 +51,12 @@ public class EditItemEnchantMessage implements IMessage {
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					if(ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound() != null)
+					if (ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound() != null)
 						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().removeTag("ench");
 					for (ModEnchantment ench : message.enchants)
 						if (ench.getLevel() != 0)
-							ctx.getServerHandler().playerEntity.getHeldItemMainhand().addEnchantment(
-									Enchantment.getEnchantmentByID(ench.getEnch()), ench.getLevel());
+							ctx.getServerHandler().playerEntity.getHeldItemMainhand()
+									.addEnchantment(Enchantment.getEnchantmentByID(ench.getEnch()), ench.getLevel());
 				}
 			});
 			return null;

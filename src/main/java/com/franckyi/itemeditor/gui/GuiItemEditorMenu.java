@@ -44,17 +44,17 @@ public class GuiItemEditorMenu extends GuiScreen {
 	public void initGui() {
 		this.buttonList
 				.add(this.displayButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 - 55, "Display"));
-		this.buttonList.add(this.enchantmentsButton = new GuiButton(1, this.width / 2 - 100, this.height / 2 - 25,
-				"Enchantments"));
+		this.buttonList.add(
+				this.enchantmentsButton = new GuiButton(1, this.width / 2 - 100, this.height / 2 - 25, "Enchantments"));
 		this.buttonList.add(this.customEffectsButton = new GuiButton(2, this.width / 2 - 100, this.height / 2 + 5,
 				"Custom Effects [SOON]"));
-		this.buttonList.add(this.exitButton = new GuiButton(3, this.width / 2 - 50, this.height / 2 + 35, 100, 20, "Exit Menu"));
+		this.buttonList.add(
+				this.exitButton = new GuiButton(3, this.width / 2 - 50, this.height / 2 + 35, 100, 20, "Exit Menu"));
 		this.buttonList.get(2).enabled = false;
 	}
-	
-	private void switchGui(int id){
-		mc.player.openGui(ItemEditorMod.instance, id, mc.world,
-				(int) mc.player.posX, (int) mc.player.posY,
+
+	private void switchGui(int id) {
+		mc.player.openGui(ItemEditorMod.instance, id, mc.world, (int) mc.player.posX, (int) mc.player.posY,
 				(int) mc.player.posZ);
 	}
 

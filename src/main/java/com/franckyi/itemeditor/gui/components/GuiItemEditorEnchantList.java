@@ -12,8 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiListExtended;
 import net.minecraft.item.Item;
 
-public class GuiItemEditorEnchantList extends GuiListExtended{
-	
+public class GuiItemEditorEnchantList extends GuiListExtended {
+
 	private List<EnchantmentListEntry> enchList;
 
 	public GuiItemEditorEnchantList(Minecraft mcIn, int widthIn, int heightIn, int topIn, int bottomIn,
@@ -21,26 +21,30 @@ public class GuiItemEditorEnchantList extends GuiListExtended{
 		super(mcIn, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
 		enchList = new ArrayList<EnchantmentListEntry>();
 		enchList.addAll(EnumEnchantmentList.getDefaults(widthIn, heightIn));
-		if(ItemEditorMod.config.safeEnchantmentsFirst){
-			enchList.sort(new Comparator<EnchantmentListEntry>(){
+		if (ItemEditorMod.config.safeEnchantmentsFirst) {
+			enchList.sort(new Comparator<EnchantmentListEntry>() {
 				@Override
 				public int compare(EnchantmentListEntry ench1, EnchantmentListEntry ench2) {
 					Item item = mc.player.getHeldItemMainhand().getItem();
-					if(ench1.getEnch().getType().canEnchantItem(item) && !ench2.getEnch().getType().canEnchantItem(item))
+					if (ench1.getEnch().getType().canEnchantItem(item)
+							&& !ench2.getEnch().getType().canEnchantItem(item))
 						return -1;
-					if(!ench1.getEnch().getType().canEnchantItem(item) && ench2.getEnch().getType().canEnchantItem(item))
+					if (!ench1.getEnch().getType().canEnchantItem(item)
+							&& ench2.getEnch().getType().canEnchantItem(item))
 						return 1;
 					return 0;
 				}
 			});
 		}
-		if(ItemEditorMod.config.globalEnchantmentsLast){
-			enchList.sort(new Comparator<EnchantmentListEntry>(){
+		if (ItemEditorMod.config.globalEnchantmentsLast) {
+			enchList.sort(new Comparator<EnchantmentListEntry>() {
 				@Override
 				public int compare(EnchantmentListEntry ench1, EnchantmentListEntry ench2) {
-					if(!(ench1.getEnch().getId() == 10 || ench1.getEnch().getId() == 71) && (ench2.getEnch().getId() == 10 || ench2.getEnch().getId() == 71))
+					if (!(ench1.getEnch().getId() == 10 || ench1.getEnch().getId() == 71)
+							&& (ench2.getEnch().getId() == 10 || ench2.getEnch().getId() == 71))
 						return -1;
-					if((ench1.getEnch().getId() == 10 || ench1.getEnch().getId() == 71) && !(ench2.getEnch().getId() == 10 || ench2.getEnch().getId() == 71))
+					if ((ench1.getEnch().getId() == 10 || ench1.getEnch().getId() == 71)
+							&& !(ench2.getEnch().getId() == 10 || ench2.getEnch().getId() == 71))
 						return 1;
 					return 0;
 				}

@@ -1,6 +1,7 @@
 package com.franckyi.itemeditor.event;
 
 import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.ModReference;
 import com.franckyi.itemeditor.gui.ItemEditorGuiHandler;
 import com.franckyi.itemeditor.misc.SharedContent;
 import com.franckyi.itemeditor.proxy.ClientProxy;
@@ -15,6 +16,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -24,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EventHandlerCommon {
 
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SubscribeEvent
 	public void onKeyPressed(KeyInputEvent e) {
 		KeyBinding[] keyBindings = ClientProxy.keyBindings;
 		if (keyBindings[0].isPressed()) {
@@ -42,11 +44,11 @@ public class EventHandlerCommon {
 			}
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent e) {
-		if(e.getGui() == null){
+		if (e.getGui() == null) {
 			SharedContent.clear();
 		}
 	}

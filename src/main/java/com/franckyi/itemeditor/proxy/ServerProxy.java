@@ -1,8 +1,9 @@
 package com.franckyi.itemeditor.proxy;
 
-public class ServerProxy implements CommonProxy{
+public class ServerProxy implements CommonProxy {
 
 	@Override
-	public void registerKeyBindings() {}
+	public void registerKeyBindings() {
+	}
 
 }

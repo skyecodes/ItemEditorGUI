@@ -61,14 +61,14 @@ public class GuiItemEditorEnchant extends GuiScreen {
 		for (EnchantmentListEntry ench : enchList.getEnchantmentList())
 			ench.getTextField()
 					.setText(EnchantmentHelper.getEnchantmentLevel(
-							Enchantment.getEnchantmentByID(ench.getEnch().getId()),
-							mc.player.getHeldItemMainhand()) + "");
+							Enchantment.getEnchantmentByID(ench.getEnch().getId()), mc.player.getHeldItemMainhand())
+							+ "");
 		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, (int) (this.height / 2 + this.height / 2.6),
 				90, 20, "Done"));
 		buttonList.add(cancelButton = new GuiButton(0, this.width / 2 + 10, (int) (this.height / 2 + this.height / 2.6),
 				90, 20, "Cancel"));
-		buttonList.add(scrollUp = new GuiButton(7, this.width/2 + this.width/3, 60, 50, 20, "Up"));
-		buttonList.add(scrollUp = new GuiButton(8, this.width/2 + this.width/3, height - 80, 50, 20, "Down"));
+		buttonList.add(scrollUp = new GuiButton(7, this.width / 2 + this.width / 3, 60, 50, 20, "Up"));
+		buttonList.add(scrollUp = new GuiButton(8, this.width / 2 + this.width / 3, height - 80, 50, 20, "Down"));
 		this.enchList.registerScrollButtons(7, 8);
 	}
 
@@ -113,8 +113,8 @@ public class GuiItemEditorEnchant extends GuiScreen {
 			mc.player.getHeldItemMainhand().getTagCompound().removeTag("ench");
 		for (ModEnchantment ench : msg)
 			if (ench.getLevel() != 0)
-				mc.player.getHeldItemMainhand()
-						.addEnchantment(Enchantment.getEnchantmentByID(ench.getEnch()), ench.getLevel());
+				mc.player.getHeldItemMainhand().addEnchantment(Enchantment.getEnchantmentByID(ench.getEnch()),
+						ench.getLevel());
 	}
 
 	private void switchGui(int id) {

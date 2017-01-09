@@ -13,16 +13,20 @@ import com.franckyi.itemeditor.packet.ItemEditorPacketHandler;
 import com.franckyi.itemeditor.proxy.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = ModReference.MODID, name = ModReference.NAME, version = ModReference.VERSION, acceptedMinecraftVersions = ModReference.MCVERSION)
+@Mod(modid = ModReference.MODID, name = ModReference.NAME, version = ModReference.VERSION, acceptedMinecraftVersions = ModReference.MCVERSION, guiFactory = ModReference.GUI_FACTORY_CLASS)
 public class ItemEditorMod {
 
 	@Instance
@@ -41,6 +45,7 @@ public class ItemEditorMod {
 	@EventHandler
 	public static void init(FMLInitializationEvent e) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new ItemEditorGuiHandler());
+		FMLCommonHandler.instance().bus().register(config);
 		MinecraftForge.EVENT_BUS.register(new EventHandlerCommon());
 		proxy.registerKeyBindings();
 		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemNameMessageHandler.class, EditItemNameMessage.class, 0,

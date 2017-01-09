@@ -12,13 +12,13 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
 public class ModEnchantmentHelper {
-	
+
 	public static class ModEnchantment {
-		
+
 		private int ench;
 		private int level;
-		
-		public ModEnchantment(int ench, int level){
+
+		public ModEnchantment(int ench, int level) {
 			this.ench = ench;
 			this.level = level;
 		}
@@ -26,18 +26,18 @@ public class ModEnchantmentHelper {
 		public int getEnch() {
 			return ench;
 		}
-		
+
 		public int getLevel() {
 			return level;
 		}
-		
+
 	}
 
 	public static class EnchantmentListEntry implements IGuiListEntry {
 
 		private EnumEnchantmentList ench;
 		private int level;
-		
+
 		private int index;
 		private GuiTextField tf;
 
@@ -47,7 +47,7 @@ public class ModEnchantmentHelper {
 			this.level = level;
 			this.tf = new GuiTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + 50, 0, 50, 15);
 		}
-		
+
 		public EnchantmentListEntry(int id, int level) {
 			this.ench = EnumEnchantmentList.getTypeFromID(id);
 			this.level = level;
@@ -79,15 +79,15 @@ public class ModEnchantmentHelper {
 				boolean isSelected) {
 			tf.yPosition = y;
 			tf.drawTextBox();
-			if(ench.id == 10 || ench.id == 71) {
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
-					y + 5, 0xaa0000);
-			}else if(ench.type.canEnchantItem(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem())) {
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
-					y + 5, 0x00aa00);
-			}else{
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(), x,
-					y + 5, 0xffffff);
+			if (ench.id == 10 || ench.id == 71) {
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
+						x, y + 5, 0xaa0000);
+			} else if (ench.type.canEnchantItem(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem())) {
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
+						x, y + 5, 0x00aa00);
+			} else {
+				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
+						x, y + 5, 0xffffff);
 			}
 		}
 
@@ -171,10 +171,10 @@ public class ModEnchantmentHelper {
 				enchList.add(new EnchantmentListEntry(ench.ordinal(), ench, 0, widthIn, heightIn));
 			return enchList;
 		}
-		
-		public static EnumEnchantmentList getTypeFromID(int id){
-			for(EnumEnchantmentList type : values())
-				if(id == type.getId())
+
+		public static EnumEnchantmentList getTypeFromID(int id) {
+			for (EnumEnchantmentList type : values())
+				if (id == type.getId())
 					return type;
 			return null;
 		}

@@ -51,8 +51,8 @@ public class EditItemLoreMessage implements IMessage {
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					ctx.getServerHandler().playerEntity.getHeldItemMainhand().getOrCreateSubCompound("display").setTag("Lore",
-							new NBTTagList());
+					ctx.getServerHandler().playerEntity.getHeldItemMainhand().getOrCreateSubCompound("display")
+							.setTag("Lore", new NBTTagList());
 					for (int i = 0; i < message.lores.size(); i++)
 						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getOrCreateSubCompound("display")
 								.getTagList("Lore", 8).appendTag(new NBTTagString(message.lores.get(i)));

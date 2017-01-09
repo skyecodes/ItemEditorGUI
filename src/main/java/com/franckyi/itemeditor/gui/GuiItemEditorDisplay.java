@@ -14,7 +14,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 
-public class GuiItemEditorDisplay extends GuiScreen{
+public class GuiItemEditorDisplay extends GuiScreen {
 
 	private GuiButton cancelButton;
 	private GuiButton doneButton;
@@ -58,17 +58,16 @@ public class GuiItemEditorDisplay extends GuiScreen{
 	public void initGui() {
 		ItemStack stack = mc.player.getHeldItemMainhand();
 		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 20, 90, 20, "Done"));
-		buttonList
-				.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 20, 90, 20, "Cancel"));
+		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 20, 90, 20, "Cancel"));
 		name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 40, 120, 20);
 		buttonList.add(formatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 40, 20, 20, "§"));
 		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 15, "Edit Lore..."));
 		name.setMaxStringLength(32);
-		if(SharedContent.currentItemName != null){
+		if (SharedContent.currentItemName != null) {
 			name.setText(SharedContent.currentItemName);
-		}else if(stack.getDisplayName().startsWith("§r")){
+		} else if (stack.getDisplayName().startsWith("§r")) {
 			name.setText(stack.getDisplayName().substring(2, stack.getDisplayName().length()));
-		}else{
+		} else {
 			name.setText(stack.getDisplayName());
 		}
 		name.setFocused(true);
@@ -98,10 +97,9 @@ public class GuiItemEditorDisplay extends GuiScreen{
 	private void updateClient() {
 		mc.player.getHeldItemMainhand().setStackDisplayName("§r" + name.getText());
 	}
-	
-	private void switchGui(int id){
-		mc.player.openGui(ItemEditorMod.instance, id, mc.world,
-				(int) mc.player.posX, (int) mc.player.posY,
+
+	private void switchGui(int id) {
+		mc.player.openGui(ItemEditorMod.instance, id, mc.world, (int) mc.player.posX, (int) mc.player.posY,
 				(int) mc.player.posZ);
 	}
 
