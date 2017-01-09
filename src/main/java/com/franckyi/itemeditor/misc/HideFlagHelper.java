@@ -71,6 +71,8 @@ public class HideFlagHelper {
 	}
 
 	public static boolean hasFlag(EnumHideFlags flag, Minecraft mc) {
+		if(mc.player.getHeldItemMainhand().getTagCompound() == null)
+			return false;
 		if(mc.player.getHeldItemMainhand().getTagCompound().getInteger("HideFlags") < flag.value)
 			return false;
 		String binaryFlag = Integer.toBinaryString(flag.value);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.franckyi.itemeditor.misc.HideFlagHelper;
+import com.franckyi.itemeditor.misc.SharedContent;
 import com.franckyi.itemeditor.misc.HideFlagHelper.EnumHideFlags;
 import com.franckyi.itemeditor.misc.HideFlagHelper.HideFlag;
 
@@ -50,6 +51,10 @@ public class EditItemHideFlagsMessage implements IMessage{
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
+					if(ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound() == null){
+						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getOrCreateSubCompound("test");
+						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().removeTag("test");
+					}
 					ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().setInteger("HideFlags",
 							HideFlagHelper.value(message.hideFlags));
 				}

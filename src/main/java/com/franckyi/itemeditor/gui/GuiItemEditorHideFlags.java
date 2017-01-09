@@ -9,11 +9,13 @@ import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.misc.HideFlagHelper;
 import com.franckyi.itemeditor.misc.HideFlagHelper.EnumHideFlags;
 import com.franckyi.itemeditor.misc.HideFlagHelper.HideFlag;
+import com.franckyi.itemeditor.misc.SharedContent;
 import com.franckyi.itemeditor.packet.EditItemHideFlagsMessage;
 import com.franckyi.itemeditor.packet.ItemEditorPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiItemEditorHideFlags extends GuiScreen {
@@ -61,6 +63,10 @@ public class GuiItemEditorHideFlags extends GuiScreen {
 	}
 
 	private void updateClient() {
+		if(mc.player.getHeldItemMainhand().getTagCompound() == null){
+			mc.player.getHeldItemMainhand().getOrCreateSubCompound("test");
+			mc.player.getHeldItemMainhand().getTagCompound().removeTag("test");
+		}
 		mc.player.getHeldItemMainhand().getTagCompound().setInteger("HideFlags", HideFlagHelper.value(hideFlags));
 	}
 
