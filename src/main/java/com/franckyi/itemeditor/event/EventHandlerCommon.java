@@ -12,6 +12,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
@@ -37,10 +38,10 @@ public class EventHandlerCommon {
 						Minecraft.getMinecraft().world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			}
 			if (player.getHeldItemMainhand().getItem().equals(Item.getItemFromBlock(Blocks.AIR))) {
-				player.sendChatMessage(TextFormatting.RED + "[ItemEditor] Please hold an item in your hand.");
+				player.sendMessage(new TextComponentString(TextFormatting.RED + "[" + ModReference.NAME + "] Please hold an item in your hand."));
 			}
 			if (!Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)) {
-				player.sendChatMessage(TextFormatting.RED + "[ItemEditor] You have to be in Creative mode.");
+				player.sendMessage(new TextComponentString(TextFormatting.RED + "[" + ModReference.NAME + "] You must be in Creative mode."));
 			}
 		}
 	}

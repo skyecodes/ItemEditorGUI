@@ -23,8 +23,8 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	private GuiButton doneButton;
 	private GuiButton formatButton;
 	private GuiButton loreButton;
+	private GuiButton hideFlagsButton;
 	private GuiTextField name;
-	private GuiCheckBox displayEnchants;
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
@@ -41,6 +41,10 @@ public class GuiItemEditorDisplay extends GuiScreen {
 		if (button == this.loreButton) {
 			SharedContent.currentItemName = name.getText();
 			switchGui(ItemEditorGuiHandler.ITEM_EDITOR_LORE);
+		}
+		if (button == this.hideFlagsButton) {
+			SharedContent.currentItemName = name.getText();
+			switchGui(ItemEditorGuiHandler.ITEM_EDITOR_HIDEFLAGS);
 		}
 	}
 
@@ -61,12 +65,12 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	@Override
 	public void initGui() {
 		ItemStack stack = mc.player.getHeldItemMainhand();
-		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 30, 90, 20, "Done"));
-		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 30, 90, 20, "Cancel"));
-		name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 50, 120, 20);
-		buttonList.add(formatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 50, 20, 20, "§"));
-		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 25, "Edit Lore..."));
-		buttonList.add(displayEnchants = new GuiCheckBox(10, this.width / 2 - 100, this.height / 2, " Display Enchantments", true));
+		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 35, 90, 20, "Done"));
+		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 35, 90, 20, "Cancel"));
+		name = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 55, 120, 20);
+		buttonList.add(formatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 55, 20, 20, "§"));
+		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 30, "Edit Lore..."));
+		buttonList.add(hideFlagsButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 5, "Edit Hide Flags..."));
 		name.setMaxStringLength(32);
 		if (SharedContent.currentItemName != null) {
 			name.setText(SharedContent.currentItemName);
@@ -96,13 +100,11 @@ public class GuiItemEditorDisplay extends GuiScreen {
 	}
 
 	private void updateServer() {
-		ItemEditorPacketHandler.INSTANCE.sendToServer(new EditItemNameMessage(name.getText(), Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, displayEnchants.isChecked()))));
+		ItemEditorPacketHandler.INSTANCE.sendToServer(new EditItemNameMessage(name.getText()));
 	}
 
 	private void updateClient() {
 		mc.player.getHeldItemMainhand().setStackDisplayName("§r" + name.getText());
-		mc.player.getHeldItemMainhand().getTagCompound().setInteger("HideFlags",
-				HideFlagHelper.value(Arrays.asList(new HideFlag(EnumHideFlags.ENCHANTMENTS, displayEnchants.isChecked()))));
 	}
 
 	private void switchGui(int id) {

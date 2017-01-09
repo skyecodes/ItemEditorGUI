@@ -10,6 +10,7 @@ public class ItemEditorGuiHandler implements IGuiHandler {
 	public static final int ITEM_EDITOR_DISPLAY = 1;
 	public static final int ITEM_EDITOR_LORE = 2;
 	public static final int ITEM_EDITOR_ENCHANT = 3;
+	public static final int ITEM_EDITOR_HIDEFLAGS = 4;
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -22,6 +23,8 @@ public class ItemEditorGuiHandler implements IGuiHandler {
 			return new GuiItemEditorLore();
 		case (ITEM_EDITOR_ENCHANT):
 			return new GuiItemEditorEnchant();
+		case(ITEM_EDITOR_HIDEFLAGS):
+			return new GuiItemEditorHideFlags();
 		default:
 			return null;
 		}

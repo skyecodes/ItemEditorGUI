@@ -15,8 +15,7 @@ public class ModEnchantmentHelper {
 
 	public static class ModEnchantment {
 
-		private int ench;
-		private int level;
+		private int ench, level;
 
 		public ModEnchantment(int ench, int level) {
 			this.ench = ench;
@@ -33,32 +32,24 @@ public class ModEnchantmentHelper {
 
 	}
 
-	public static class EnchantmentListEntry implements IGuiListEntry {
+	public static class EnchantmentListEntry {
 
 		private EnumEnchantmentList ench;
-		private int level;
-
 		private int index;
 		private GuiTextField tf;
 
-		public EnchantmentListEntry(int index, EnumEnchantmentList ench, int level, int widthIn, int heightIn) {
+		public EnchantmentListEntry(int index, EnumEnchantmentList ench, int widthIn, int heightIn) {
 			this.index = index;
 			this.ench = ench;
-			this.level = level;
-			this.tf = new GuiTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + 50, 0, 50, 15);
+			this.tf = new GuiTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + widthIn / 4, 0, 50, 15);
 		}
 
 		public EnchantmentListEntry(int id, int level) {
 			this.ench = EnumEnchantmentList.getTypeFromID(id);
-			this.level = level;
 		}
 
 		public EnumEnchantmentList getEnch() {
 			return ench;
-		}
-
-		public int getLevel() {
-			return level;
 		}
 
 		public int getIndex() {
@@ -67,39 +58,6 @@ public class ModEnchantmentHelper {
 
 		public GuiTextField getTextField() {
 			return tf;
-		}
-
-		@Override
-		public void setSelected(int p_178011_1_, int p_178011_2_, int p_178011_3_) {
-
-		}
-
-		@Override
-		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY,
-				boolean isSelected) {
-			tf.yPosition = y;
-			tf.drawTextBox();
-			if (ench.id == 10 || ench.id == 71) {
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
-						x, y + 5, 0xaa0000);
-			} else if (ench.type.canEnchantItem(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem())) {
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
-						x, y + 5, 0x00aa00);
-			} else {
-				Minecraft.getMinecraft().ingameGUI.drawString(Minecraft.getMinecraft().fontRendererObj, ench.getName(),
-						x, y + 5, 0xffffff);
-			}
-		}
-
-		@Override
-		public boolean mousePressed(int slotIndex, int mouseX, int mouseY, int mouseEvent, int relativeX,
-				int relativeY) {
-			return false;
-		}
-
-		@Override
-		public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY) {
-
 		}
 
 	}
@@ -168,7 +126,7 @@ public class ModEnchantmentHelper {
 		public static List<EnchantmentListEntry> getDefaults(int widthIn, int heightIn) {
 			List<EnchantmentListEntry> enchList = new ArrayList<EnchantmentListEntry>();
 			for (EnumEnchantmentList ench : values())
-				enchList.add(new EnchantmentListEntry(ench.ordinal(), ench, 0, widthIn, heightIn));
+				enchList.add(new EnchantmentListEntry(ench.ordinal(), ench, widthIn, heightIn));
 			return enchList;
 		}
 

@@ -57,7 +57,7 @@ public class GuiItemEditorEnchant extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		enchList = new GuiItemEditorEnchantList(mc, width, height, 50, height - 50, 25);
+		enchList = new GuiItemEditorEnchantList(mc, width/2, height, 50, height - 50, width/4, 25, width, height, this);
 		for (EnchantmentListEntry ench : enchList.getEnchantmentList())
 			ench.getTextField()
 					.setText(EnchantmentHelper.getEnchantmentLevel(
@@ -67,9 +67,6 @@ public class GuiItemEditorEnchant extends GuiScreen {
 				90, 20, "Done"));
 		buttonList.add(cancelButton = new GuiButton(0, this.width / 2 + 10, (int) (this.height / 2 + this.height / 2.6),
 				90, 20, "Cancel"));
-		buttonList.add(scrollUp = new GuiButton(7, this.width / 2 + this.width / 3, 60, 50, 20, "Up"));
-		buttonList.add(scrollUp = new GuiButton(8, this.width / 2 + this.width / 3, height - 80, 50, 20, "Down"));
-		this.enchList.registerScrollButtons(7, 8);
 	}
 
 	@Override

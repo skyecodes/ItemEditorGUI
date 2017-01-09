@@ -23,29 +23,19 @@ public class EditItemNameMessage implements IMessage {
 	}
 
 	private String name;
-	private List<HideFlag> hideFlags;
 
-	public EditItemNameMessage(String name, List<HideFlag> hideFlags) {
-		this.hideFlags = hideFlags;
-		this.name = "§r" + name;
+	public EditItemNameMessage(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		String[] bufName = ByteBufUtils.readUTF8String(buf).split("§§");
-		name = bufName[1].substring(1, bufName[1].length());
-		hideFlags = new ArrayList<HideFlag>();
-		for (String flag : bufName[0].split(";"))
-			hideFlags.add(new HideFlag(EnumHideFlags.getFlagFromValue(Integer.parseInt(flag.split(":")[0])),
-					Boolean.parseBoolean(flag.split(":")[1])));
+		name = ByteBufUtils.readUTF8String(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		String bufString = "";
-		for (HideFlag flag : hideFlags)
-			bufString += flag.getFlagValue() + ":" + flag.isDisplayed() + ";";
-		ByteBufUtils.writeUTF8String(buf, bufString.substring(0, bufString.length() - 1) + "§" + name);
+		ByteBufUtils.writeUTF8String(buf, name);
 	}
 
 	public static class EditItemNameMessageHandler implements IMessageHandler<EditItemNameMessage, IMessage> {
@@ -57,8 +47,6 @@ public class EditItemNameMessage implements IMessage {
 				@Override
 				public void run() {
 					ctx.getServerHandler().playerEntity.getHeldItemMainhand().setStackDisplayName("§r" + message.name);
-					ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().setInteger("HideFlags",
-							HideFlagHelper.value(message.hideFlags));
 				}
 			});
 			return null;

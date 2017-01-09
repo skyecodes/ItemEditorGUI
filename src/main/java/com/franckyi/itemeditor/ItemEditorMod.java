@@ -5,6 +5,8 @@ import com.franckyi.itemeditor.event.EventHandlerCommon;
 import com.franckyi.itemeditor.gui.ItemEditorGuiHandler;
 import com.franckyi.itemeditor.packet.EditItemEnchantMessage;
 import com.franckyi.itemeditor.packet.EditItemEnchantMessage.EditItemEnchantMessageHandler;
+import com.franckyi.itemeditor.packet.EditItemHideFlagsMessage;
+import com.franckyi.itemeditor.packet.EditItemHideFlagsMessage.EditItemHideFlagsMessageHandler;
 import com.franckyi.itemeditor.packet.EditItemLoreMessage;
 import com.franckyi.itemeditor.packet.EditItemLoreMessage.EditItemLoreMessageHandler;
 import com.franckyi.itemeditor.packet.EditItemNameMessage;
@@ -54,6 +56,8 @@ public class ItemEditorMod {
 				Side.SERVER);
 		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemEnchantMessageHandler.class,
 				EditItemEnchantMessage.class, 2, Side.SERVER);
+		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemHideFlagsMessageHandler.class,
+				EditItemHideFlagsMessage.class, 3, Side.SERVER);
 	}
 
 }
