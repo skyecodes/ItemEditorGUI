@@ -44,14 +44,14 @@ public class GuiItemEditorHideFlags extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 15, 90, 40, "Done"));
-		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 15, 90, 40, "Cancel"));
-		buttonList.add(hideEnchants = new GuiCheckBox(10, width / 2 - width / 5, height / 2 - 60, " Hide Enchantments", false));
-		buttonList.add(hideAttributeModifiers = new GuiCheckBox(11, width / 2 - width / 5, height / 2 - 45, " Hide Attribute Modifiers", false));
-		buttonList.add(hideUnbreakable = new GuiCheckBox(12, width / 2 - width / 5, height / 2 - 30, " Hide 'Unbreakable'", false));
-		buttonList.add(hideCanDestroy = new GuiCheckBox(13, width / 2 - width / 5, height / 2 - 15, " Hide 'Can Destroy'", false));
-		buttonList.add(hideCanBePlacedOn = new GuiCheckBox(14, width / 2 - width / 5, height / 2 - 0, " Hide 'Can Be Placed On'", false));
-		buttonList.add(hidePotionEffects = new GuiCheckBox(15, width / 2 - width / 5, height / 2 + 15, " Hide Potion Effects", false));
+		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 35, 90, 20, "Done"));
+		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 35, 90, 20, "Cancel"));
+		buttonList.add(hideEnchants = new GuiCheckBox(10, width / 2 - width / 5, height / 2 - 65, " Hide Enchantments", false));
+		buttonList.add(hideAttributeModifiers = new GuiCheckBox(11, width / 2 - width / 5, height / 2 - 50, " Hide Attribute Modifiers", false));
+		buttonList.add(hideUnbreakable = new GuiCheckBox(12, width / 2 - width / 5, height / 2 - 35, " Hide 'Unbreakable'", false));
+		buttonList.add(hideCanDestroy = new GuiCheckBox(13, width / 2 - width / 5, height / 2 - 20, " Hide 'Can Destroy'", false));
+		buttonList.add(hideCanBePlacedOn = new GuiCheckBox(14, width / 2 - width / 5, height / 2 - 5, " Hide 'Can Be Placed On'", false));
+		buttonList.add(hidePotionEffects = new GuiCheckBox(15, width / 2 - width / 5, height / 2 + 10, " Hide Potion Effects", false));
 		hideEnchants.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.ENCHANTMENTS, mc));
 		hideAttributeModifiers.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.MODIFIERS, mc));
 		hideUnbreakable.setIsChecked(HideFlagHelper.hasFlag(EnumHideFlags.UNBREAKABLE, mc));

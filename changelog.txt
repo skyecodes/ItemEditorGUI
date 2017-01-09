@@ -1,5 +1,8 @@
 Changelog :
 
+1.11.2-0.0.3.3 :
+- Fix : Button size in the 'Hide Flags' menu
+
 1.11.2-0.0.3.2 : 
 - Added : Supports all HideFlags
 - Fix : minor bugs
