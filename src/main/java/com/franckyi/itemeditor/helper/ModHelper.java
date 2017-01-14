@@ -8,12 +8,6 @@ public class ModHelper {
 	public static ItemStack clientStack;
 	public static ItemStack serverStack;
 	public static String currentItemName;
-
-	public static void clear() {
-//		currentItemName = null;
-//		clientStack = null;
-//		serverStack = null;
-	}
 	
 	public static NBTTagCompound getOrCreateClientTagCompound(){
 		clientStack.getOrCreateSubCompound("test");

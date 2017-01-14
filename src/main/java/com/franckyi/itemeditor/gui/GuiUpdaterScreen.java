@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.helper.ModHelper;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -37,7 +38,7 @@ public abstract class GuiUpdaterScreen extends GuiScreen {
 	public final boolean doesGuiPauseGame() {
 		return ItemEditorMod.config.pauseGame;
 	}
-	
+
 	public abstract void initGui();
 
 	protected abstract void updateServer();

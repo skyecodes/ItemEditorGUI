@@ -71,12 +71,4 @@ public class ModEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onGuiOpen(GuiOpenEvent e) {
-		if (e.getGui() == null) {
-			ModHelper.clear();
-		}
-	}
-
 }
