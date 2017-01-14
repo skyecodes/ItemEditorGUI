@@ -15,8 +15,8 @@ public class GuiIntTextField extends GuiTextField {
 			return super.textboxKeyTyped(typedChar, keyCode);
 		return false;
 	}
-	
-	public int getInt(){
+
+	public int getInt() {
 		return Integer.parseInt(getText());
 	}
 

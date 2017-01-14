@@ -6,7 +6,6 @@ import java.util.List;
 import com.franckyi.itemeditor.gui.child.GuiIntTextField;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
 public class EnchantmentHelper {
@@ -40,7 +39,8 @@ public class EnchantmentHelper {
 		public EnchantmentListEntry(int index, EnumEnchantment ench, int widthIn, int heightIn) {
 			this.index = index;
 			this.ench = ench;
-			this.textField = new GuiIntTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + widthIn / 4, 0, 30, 15);
+			this.textField = new GuiIntTextField(index, Minecraft.getMinecraft().fontRendererObj,
+					widthIn / 2 + widthIn / 4, 0, 30, 15);
 		}
 
 		public EnumEnchantment getEnch() {
@@ -50,7 +50,7 @@ public class EnchantmentHelper {
 		public int getIndex() {
 			return index;
 		}
-		
+
 		public GuiIntTextField getTextField() {
 			return textField;
 		}

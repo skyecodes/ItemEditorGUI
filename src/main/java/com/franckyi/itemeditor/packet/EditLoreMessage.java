@@ -6,8 +6,6 @@ import java.util.List;
 import com.franckyi.itemeditor.helper.ModHelper;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagEnd;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.IThreadListener;
@@ -43,7 +41,7 @@ public class EditLoreMessage implements IMessage {
 		for (String lore : lores) {
 			bufLore += lore + "§";
 		}
-		if(bufLore.equals(""))
+		if (bufLore.equals(""))
 			ByteBufUtils.writeUTF8String(buf, "§r");
 		else
 			ByteBufUtils.writeUTF8String(buf, bufLore.substring(0, bufLore.length() - 1));

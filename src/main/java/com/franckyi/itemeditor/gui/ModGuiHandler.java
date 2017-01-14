@@ -1,7 +1,6 @@
 package com.franckyi.itemeditor.gui;
 
 import com.franckyi.itemeditor.config.ModConfiguration;
-import com.franckyi.itemeditor.helper.ModHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,13 +49,13 @@ public class ModGuiHandler implements IGuiHandler {
 	public static int getDefaultGui() {
 		return (ModConfiguration.preferCompactInterface) ? ITEM_EDITOR_COMPACT : ITEM_EDITOR_MENU;
 	}
-	
+
 	private int getScaleFromWindowSize() {
-		if(Minecraft.getMinecraft().displayWidth <= 1400 || Minecraft.getMinecraft().displayHeight <= 750)
+		if (Minecraft.getMinecraft().displayWidth <= 1400 || Minecraft.getMinecraft().displayHeight <= 750)
 			return 1;
-		if(Minecraft.getMinecraft().displayWidth <= 2100 || Minecraft.getMinecraft().displayHeight <= 1150)
+		if (Minecraft.getMinecraft().displayWidth <= 2100 || Minecraft.getMinecraft().displayHeight <= 1150)
 			return 2;
-		if(Minecraft.getMinecraft().displayWidth > 2100 && Minecraft.getMinecraft().displayHeight > 1150)
+		if (Minecraft.getMinecraft().displayWidth > 2100 && Minecraft.getMinecraft().displayHeight > 1150)
 			return 3;
 		return 0;
 	}

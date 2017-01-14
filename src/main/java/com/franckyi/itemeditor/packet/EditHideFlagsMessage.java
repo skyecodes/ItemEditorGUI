@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.franckyi.itemeditor.helper.HideFlagHelper;
-import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.helper.HideFlagHelper.EnumHideFlag;
 import com.franckyi.itemeditor.helper.HideFlagHelper.ItemHideFlag;
+import com.franckyi.itemeditor.helper.ModHelper;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.IThreadListener;

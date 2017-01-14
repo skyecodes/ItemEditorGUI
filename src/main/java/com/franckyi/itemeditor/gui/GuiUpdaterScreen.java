@@ -1,15 +1,11 @@
 package com.franckyi.itemeditor.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
-import com.franckyi.itemeditor.helper.ModHelper;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTextField;
 
 public abstract class GuiUpdaterScreen extends GuiScreen {
 

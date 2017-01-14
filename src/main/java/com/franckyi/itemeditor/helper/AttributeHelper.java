@@ -1,7 +1,6 @@
 package com.franckyi.itemeditor.helper;
 
 import com.franckyi.itemeditor.gui.child.IEnumButtonField;
-import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttribute;
 
 public class AttributeHelper {
 
@@ -34,12 +33,14 @@ public class AttributeHelper {
 		public String getSlot() {
 			return slot;
 		}
-		
+
 	}
 
 	public static enum EnumAttribute {
-		MAX_HEALTH("generic.maxHealth", "Max Health"), FOLLOW_RANGE("generic.followRange", "Follow Range"), KNOCKBACK_RESISTANCE(
-				"generic.knockbackResistance", "Knockback Res."), MOVEMENT_SPEED("generic.movementSpeed", "Movement Speed"), ATTACK_DAMAGE("generic.attackDamage", "Attack Damage");
+		MAX_HEALTH("generic.maxHealth", "Max Health"), FOLLOW_RANGE("generic.followRange",
+				"Follow Range"), KNOCKBACK_RESISTANCE("generic.knockbackResistance", "Knockback Res."), MOVEMENT_SPEED(
+						"generic.movementSpeed",
+						"Movement Speed"), ATTACK_DAMAGE("generic.attackDamage", "Attack Damage");
 
 		private String name, text;
 
@@ -51,30 +52,30 @@ public class AttributeHelper {
 		public String getName() {
 			return name;
 		}
-		
+
 		public String getText() {
 			return text;
 		}
-		
+
 	}
-	
-	public static EnumAttribute getAttributeFromName(String name){
-		for(EnumAttribute attr : EnumAttribute.values())
-			if(attr.name.equals(name))
+
+	public static EnumAttribute getAttributeFromName(String name) {
+		for (EnumAttribute attr : EnumAttribute.values())
+			if (attr.name.equals(name))
 				return attr;
 		return null;
 	}
 
 	public static EnumAttribute getAttributeFromID(int i) {
-		for(EnumAttribute attr : EnumAttribute.values())
-			if(i == attr.ordinal())
+		for (EnumAttribute attr : EnumAttribute.values())
+			if (i == attr.ordinal())
 				return attr;
 		return null;
 	}
-	
-	public static enum EnumAttributeOperation implements IEnumButtonField<Integer>{
+
+	public static enum EnumAttributeOperation implements IEnumButtonField<Integer> {
 		ADDITIVE("Additive (0)", 0), MULTIPLICATIVE1("Multiplicative (1)", 1), MULTIPLICATIVE2("Multiplicative (2)", 2);
-		
+
 		private String text;
 		private int value;
 
@@ -93,18 +94,19 @@ public class AttributeHelper {
 			return value;
 		}
 	}
-	
-	public static enum EnumAttributeSlot implements IEnumButtonField<String>{
-		ANY("Any", "any"), MAINHAND("Main Hand", "mainhand"), OFFHAND("Off Hand", "offhand"), HELMET("Helmet", "head"), CHESTPLATE("Chestplate", "chest"), LEGGINGS("Leggings", "legs"), BOOTS("Boots", "feet");
+
+	public static enum EnumAttributeSlot implements IEnumButtonField<String> {
+		ANY("Any", "any"), MAINHAND("Main Hand", "mainhand"), OFFHAND("Off Hand", "offhand"), HELMET("Helmet",
+				"head"), CHESTPLATE("Chestplate", "chest"), LEGGINGS("Leggings", "legs"), BOOTS("Boots", "feet");
 
 		private String text;
 		private String value;
-		
+
 		EnumAttributeSlot(String text, String value) {
 			this.text = text;
 			this.value = value;
 		}
-		
+
 		@Override
 		public String getButtonText() {
 			return text;

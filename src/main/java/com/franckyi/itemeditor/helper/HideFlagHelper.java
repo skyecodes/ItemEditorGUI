@@ -2,8 +2,6 @@ package com.franckyi.itemeditor.helper;
 
 import java.util.List;
 
-import com.franckyi.itemeditor.helper.HideFlagHelper.EnumHideFlag;
-
 import net.minecraft.client.Minecraft;
 
 public class HideFlagHelper {
@@ -33,7 +31,9 @@ public class HideFlagHelper {
 	}
 
 	public static enum EnumHideFlag {
-		ENCHANTMENTS(1, "Hide Enchantments"), MODIFIERS(2, "Hide Attribute Modifiers"), UNBREAKABLE(4, "Hide Unbreakable"), CAN_DESTROY(8, "Hide 'Can Destroy'"), CAN_BE_PLACED_ON(16, "Hide 'Can Be Placed On'"), POTION_EFFECTS(32, "Hide Potion Effects");
+		ENCHANTMENTS(1, "Hide Enchantments"), MODIFIERS(2, "Hide Attribute Modifiers"), UNBREAKABLE(4,
+				"Hide Unbreakable"), CAN_DESTROY(8, "Hide 'Can Destroy'"), CAN_BE_PLACED_ON(16,
+						"Hide 'Can Be Placed On'"), POTION_EFFECTS(32, "Hide Potion Effects");
 
 		private int value;
 		private String text;
@@ -47,7 +47,7 @@ public class HideFlagHelper {
 			return text;
 		}
 	}
-	
+
 	public static EnumHideFlag getFlagFromValue(int value) {
 		for (EnumHideFlag flag : EnumHideFlag.values())
 			if (value == flag.value)
@@ -69,8 +69,7 @@ public class HideFlagHelper {
 			return false;
 		String binaryFlag = Integer.toBinaryString(flag.value);
 		int index = binaryFlag.length();
-		String binaryTag = Integer
-				.toBinaryString(ModHelper.clientStack.getTagCompound().getInteger("HideFlags"));
+		String binaryTag = Integer.toBinaryString(ModHelper.clientStack.getTagCompound().getInteger("HideFlags"));
 		if (binaryTag.substring(binaryTag.length() - index, binaryTag.length() - index + 1).equals("1"))
 			return true;
 		return false;

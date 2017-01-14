@@ -11,10 +11,6 @@ import com.franckyi.itemeditor.packet.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagEnd;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 
 public class GuiEditLore extends GuiUpdaterScreen {
 
@@ -42,9 +38,10 @@ public class GuiEditLore extends GuiUpdaterScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawString(fontRendererObj, "Edit Item Lore", this.width / 2 - 35, this.height / 2 - 90, 0x5555ff);
-		for (int i = 0; i < loreNumber; i++) 
-			drawString(fontRendererObj, "Lore " + (i + 1) + " :", this.width / 2 - 100, firstHeight + 25 * i + 7, 0xffffff);
-		for(GuiTextField field : itemLores)
+		for (int i = 0; i < loreNumber; i++)
+			drawString(fontRendererObj, "Lore " + (i + 1) + " :", this.width / 2 - 100, firstHeight + 25 * i + 7,
+					0xffffff);
+		for (GuiTextField field : itemLores)
 			field.drawTextBox();
 	}
 
@@ -64,7 +61,8 @@ public class GuiEditLore extends GuiUpdaterScreen {
 			} else {
 				itemLores[i].setText(lore);
 			}
-			buttonList.add(loreFormatButtons[i] = new GuiButton(i, width / 2 + 80, firstHeight + 25 * i, 20, 20, "§5§"));
+			buttonList
+					.add(loreFormatButtons[i] = new GuiButton(i, width / 2 + 80, firstHeight + 25 * i, 20, 20, "§5§"));
 		}
 		buttonList.add(doneButton = new GuiButton(loreNumber, this.width / 2 - 100, firstHeight + 25 * loreNumber + 10,
 				90, 20, "§2Done"));
@@ -72,24 +70,24 @@ public class GuiEditLore extends GuiUpdaterScreen {
 				firstHeight + 25 * loreNumber + 10, 90, 20, "§4Cancel"));
 		itemLores[0].setFocused(true);
 	}
-	
+
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		for(GuiTextField field : itemLores)
+		for (GuiTextField field : itemLores)
 			field.textboxKeyTyped(typedChar, keyCode);
 		super.keyTyped(typedChar, keyCode);
 	}
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		for(GuiTextField field : itemLores)
+		for (GuiTextField field : itemLores)
 			field.mouseClicked(mouseX, mouseY, mouseButton);
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
 	@Override
 	public void updateScreen() {
-		for(GuiTextField field : itemLores)
+		for (GuiTextField field : itemLores)
 			field.updateCursorCounter();
 		super.updateScreen();
 	}

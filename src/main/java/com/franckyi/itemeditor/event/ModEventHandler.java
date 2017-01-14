@@ -13,13 +13,11 @@ import com.franckyi.itemeditor.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -33,11 +31,12 @@ public class ModEventHandler {
 	public void onKeyPressed(KeyboardInputEvent.Post e) {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if (Keyboard.getEventKey() == ClientProxy.keyBinding.getKeyCode() && Keyboard.getEventKeyState() == true)
-			if (e.getGui() instanceof GuiContainerCreative && Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)) {
+			if (e.getGui() instanceof GuiContainerCreative
+					&& Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)) {
 				GuiContainerCreative inventoryScreen = ((GuiContainerCreative) e.getGui());
 				if (inventoryScreen.getSlotUnderMouse() != null)
 					if (inventoryScreen.getSlotUnderMouse().getHasStack())
-						if(inventoryScreen.getSlotUnderMouse().inventory.equals(player.inventory)){
+						if (inventoryScreen.getSlotUnderMouse().inventory.equals(player.inventory)) {
 							ModHelper.clientStack = ((GuiContainerCreative) e.getGui()).getSlotUnderMouse().getStack();
 							ModPacketHandler.INSTANCE.sendToServer(
 									new GetClientStackMessage(player.inventory.getSlotFor(ModHelper.clientStack)));
@@ -45,8 +44,9 @@ public class ModEventHandler {
 									Minecraft.getMinecraft().world, (int) player.posX, (int) player.posY,
 									(int) player.posZ);
 						}
-			} else player.sendMessage(new TextComponentString(
-					TextFormatting.RED + "[" + ModReference.NAME + "] You must be in your Creative inventory."));
+			} else
+				player.sendMessage(new TextComponentString(
+						TextFormatting.RED + "[" + ModReference.NAME + "] You must be in your Creative inventory."));
 	}
 
 	@SideOnly(Side.CLIENT)

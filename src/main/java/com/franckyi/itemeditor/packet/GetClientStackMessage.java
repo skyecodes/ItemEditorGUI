@@ -10,11 +10,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class GetClientStackMessage implements IMessage {
-	
-	public GetClientStackMessage() {}
-	
+
+	public GetClientStackMessage() {
+	}
+
 	private int inventoryStack;
-	
+
 	public GetClientStackMessage(int inventoryStack) {
 		this.inventoryStack = inventoryStack;
 	}
@@ -28,7 +29,7 @@ public class GetClientStackMessage implements IMessage {
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(inventoryStack);
 	}
-	
+
 	public static class GetClientStackMessageHandler implements IMessageHandler<GetClientStackMessage, IMessage> {
 
 		@Override
@@ -37,12 +38,13 @@ public class GetClientStackMessage implements IMessage {
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					ModHelper.serverStack = ctx.getServerHandler().playerEntity.inventory.getStackInSlot(message.inventoryStack);
+					ModHelper.serverStack = ctx.getServerHandler().playerEntity.inventory
+							.getStackInSlot(message.inventoryStack);
 				}
 			});
 			return null;
 		}
-	
+
 	}
 
 }

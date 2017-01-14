@@ -8,14 +8,14 @@ public class ModHelper {
 	public static ItemStack clientStack;
 	public static ItemStack serverStack;
 	public static String currentItemName;
-	
-	public static NBTTagCompound getOrCreateClientTagCompound(){
+
+	public static NBTTagCompound getOrCreateClientTagCompound() {
 		clientStack.getOrCreateSubCompound("test");
 		clientStack.getTagCompound().removeTag("test");
 		return clientStack.getTagCompound();
 	}
-	
-	public static NBTTagCompound getOrCreateServerTagCompound(){
+
+	public static NBTTagCompound getOrCreateServerTagCompound() {
 		serverStack.getOrCreateSubCompound("test");
 		serverStack.getTagCompound().removeTag("test");
 		return serverStack.getTagCompound();

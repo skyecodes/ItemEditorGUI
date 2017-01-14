@@ -8,7 +8,6 @@ import com.franckyi.itemeditor.packet.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.item.ItemStack;
 
 public class GuiEditDisplay extends GuiUpdaterScreen {
 
@@ -57,7 +56,8 @@ public class GuiEditDisplay extends GuiUpdaterScreen {
 		if (ModHelper.currentItemName != null)
 			itemName.setText(ModHelper.currentItemName);
 		else if (ModHelper.clientStack.getDisplayName().startsWith("§r"))
-			itemName.setText(ModHelper.clientStack.getDisplayName().substring(2, ModHelper.clientStack.getDisplayName().length()));
+			itemName.setText(ModHelper.clientStack.getDisplayName().substring(2,
+					ModHelper.clientStack.getDisplayName().length()));
 		else
 			itemName.setText(ModHelper.clientStack.getDisplayName());
 		itemName.setFocused(true);

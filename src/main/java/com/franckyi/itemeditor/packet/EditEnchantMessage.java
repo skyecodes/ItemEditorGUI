@@ -3,12 +3,11 @@ package com.franckyi.itemeditor.packet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.franckyi.itemeditor.helper.ModHelper;
 import com.franckyi.itemeditor.helper.EnchantmentHelper.ItemEnchantment;
+import com.franckyi.itemeditor.helper.ModHelper;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -52,15 +51,14 @@ public class EditEnchantMessage implements IMessage {
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					if (ModHelper.serverStack.getTagCompound() != null){
+					if (ModHelper.serverStack.getTagCompound() != null) {
 						ModHelper.serverStack.getTagCompound().removeTag("ench");
 						ModHelper.serverStack.getTagCompound().removeTag("Unbreakable");
 					}
-					for (ItemEnchantment ench : message.enchants){
-						if (ench.getEnch() == 420){
+					for (ItemEnchantment ench : message.enchants) {
+						if (ench.getEnch() == 420) {
 							ModHelper.getOrCreateServerTagCompound().setInteger("Unbreakable", 1);
-						}
-						else if (ench.getLevel() != 0)
+						} else if (ench.getLevel() != 0)
 							ModHelper.serverStack.addEnchantment(Enchantment.getEnchantmentByID(ench.getEnch()),
 									ench.getLevel());
 					}
