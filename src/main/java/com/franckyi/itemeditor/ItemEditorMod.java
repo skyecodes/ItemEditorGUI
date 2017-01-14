@@ -1,21 +1,24 @@
 package com.franckyi.itemeditor;
 
-import com.franckyi.itemeditor.config.ItemEditorConfiguration;
-import com.franckyi.itemeditor.event.EventHandlerCommon;
-import com.franckyi.itemeditor.gui.ItemEditorGuiHandler;
-import com.franckyi.itemeditor.packet.EditItemEnchantMessage;
-import com.franckyi.itemeditor.packet.EditItemEnchantMessage.EditItemEnchantMessageHandler;
-import com.franckyi.itemeditor.packet.EditItemHideFlagsMessage;
-import com.franckyi.itemeditor.packet.EditItemHideFlagsMessage.EditItemHideFlagsMessageHandler;
-import com.franckyi.itemeditor.packet.EditItemLoreMessage;
-import com.franckyi.itemeditor.packet.EditItemLoreMessage.EditItemLoreMessageHandler;
-import com.franckyi.itemeditor.packet.EditItemNameMessage;
-import com.franckyi.itemeditor.packet.EditItemNameMessage.EditItemNameMessageHandler;
-import com.franckyi.itemeditor.packet.ItemEditorPacketHandler;
+import com.franckyi.itemeditor.config.ModConfiguration;
+import com.franckyi.itemeditor.event.ModEventHandler;
+import com.franckyi.itemeditor.gui.ModGuiHandler;
+import com.franckyi.itemeditor.packet.EditAttributesMessage;
+import com.franckyi.itemeditor.packet.EditAttributesMessage.EditAttributesMessageHandler;
+import com.franckyi.itemeditor.packet.EditEnchantMessage;
+import com.franckyi.itemeditor.packet.EditEnchantMessage.EditEnchantMessageHandler;
+import com.franckyi.itemeditor.packet.EditHideFlagsMessage;
+import com.franckyi.itemeditor.packet.EditHideFlagsMessage.EditHideFlagsMessageHandler;
+import com.franckyi.itemeditor.packet.EditLoreMessage;
+import com.franckyi.itemeditor.packet.EditLoreMessage.EditLoreMessageHandler;
+import com.franckyi.itemeditor.packet.EditNameMessage;
+import com.franckyi.itemeditor.packet.EditNameMessage.EditNameMessageHandler;
+import com.franckyi.itemeditor.packet.GetClientStackMessage;
+import com.franckyi.itemeditor.packet.GetClientStackMessage.GetClientStackMessageHandler;
+import com.franckyi.itemeditor.packet.ModPacketHandler;
 import com.franckyi.itemeditor.proxy.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -23,10 +26,8 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = ModReference.MODID, name = ModReference.NAME, version = ModReference.VERSION, acceptedMinecraftVersions = ModReference.MCVERSION, guiFactory = ModReference.GUI_FACTORY_CLASS)
 public class ItemEditorMod {
@@ -34,30 +35,36 @@ public class ItemEditorMod {
 	@Instance
 	public static ItemEditorMod instance;
 
-	public static ItemEditorConfiguration config;
+	public static ModConfiguration config;
 
 	@SidedProxy(clientSide = ModReference.CLIENT_PROXY_CLASS, serverSide = ModReference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent e) {
-		config = new ItemEditorConfiguration(e.getSuggestedConfigurationFile());
+		config = new ModConfiguration(e.getSuggestedConfigurationFile());
 	}
 
 	@EventHandler
 	public static void init(FMLInitializationEvent e) {
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new ItemEditorGuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new ModGuiHandler());
 		FMLCommonHandler.instance().bus().register(config);
-		MinecraftForge.EVENT_BUS.register(new EventHandlerCommon());
+		MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 		proxy.registerKeyBindings();
-		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemNameMessageHandler.class, EditItemNameMessage.class, 0,
+		registerMessages();
+	}
+
+	private static void registerMessages() {
+		ModPacketHandler.INSTANCE.registerMessage(GetClientStackMessageHandler.class, GetClientStackMessage.class, 10,
 				Side.SERVER);
-		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemLoreMessageHandler.class, EditItemLoreMessage.class, 1,
+		ModPacketHandler.INSTANCE.registerMessage(EditNameMessageHandler.class, EditNameMessage.class, 0, Side.SERVER);
+		ModPacketHandler.INSTANCE.registerMessage(EditLoreMessageHandler.class, EditLoreMessage.class, 1, Side.SERVER);
+		ModPacketHandler.INSTANCE.registerMessage(EditEnchantMessageHandler.class, EditEnchantMessage.class, 2,
 				Side.SERVER);
-		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemEnchantMessageHandler.class,
-				EditItemEnchantMessage.class, 2, Side.SERVER);
-		ItemEditorPacketHandler.INSTANCE.registerMessage(EditItemHideFlagsMessageHandler.class,
-				EditItemHideFlagsMessage.class, 3, Side.SERVER);
+		ModPacketHandler.INSTANCE.registerMessage(EditHideFlagsMessageHandler.class, EditHideFlagsMessage.class, 3,
+				Side.SERVER);
+		ModPacketHandler.INSTANCE.registerMessage(EditAttributesMessageHandler.class, EditAttributesMessage.class, 4,
+				Side.SERVER);
 	}
 
 }

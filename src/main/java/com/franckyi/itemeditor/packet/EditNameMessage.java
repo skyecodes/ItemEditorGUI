@@ -1,13 +1,6 @@
 package com.franckyi.itemeditor.packet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.franckyi.itemeditor.misc.HideFlagHelper;
-import com.franckyi.itemeditor.misc.HideFlagHelper.EnumHideFlags;
-import com.franckyi.itemeditor.misc.HideFlagHelper.HideFlag;
+import com.franckyi.itemeditor.helper.ModHelper;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.IThreadListener;
@@ -17,14 +10,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class EditItemNameMessage implements IMessage {
+public class EditNameMessage implements IMessage {
 
-	public EditItemNameMessage() {
+	public EditNameMessage() {
 	}
 
 	private String name;
 
-	public EditItemNameMessage(String name) {
+	public EditNameMessage(String name) {
 		this.name = name;
 	}
 
@@ -38,15 +31,15 @@ public class EditItemNameMessage implements IMessage {
 		ByteBufUtils.writeUTF8String(buf, name);
 	}
 
-	public static class EditItemNameMessageHandler implements IMessageHandler<EditItemNameMessage, IMessage> {
+	public static class EditNameMessageHandler implements IMessageHandler<EditNameMessage, IMessage> {
 
 		@Override
-		public IMessage onMessage(final EditItemNameMessage message, final MessageContext ctx) {
+		public IMessage onMessage(final EditNameMessage message, final MessageContext ctx) {
 			IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.world;
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					ctx.getServerHandler().playerEntity.getHeldItemMainhand().setStackDisplayName("§r" + message.name);
+					ModHelper.serverStack.setStackDisplayName("§r" + message.name);
 				}
 			});
 			return null;

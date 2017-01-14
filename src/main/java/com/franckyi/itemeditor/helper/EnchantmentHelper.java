@@ -1,23 +1,22 @@
-package com.franckyi.itemeditor.misc;
+package com.franckyi.itemeditor.helper;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
+import com.franckyi.itemeditor.gui.child.GuiIntTextField;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiListExtended.IGuiListEntry;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
-public class ModEnchantmentHelper {
+public class EnchantmentHelper {
 
-	public static class ModEnchantment {
+	public static class ItemEnchantment {
 
 		private int ench, level;
+		private GuiIntTextField textField;
 
-		public ModEnchantment(int ench, int level) {
+		public ItemEnchantment(int ench, int level) {
 			this.ench = ench;
 			this.level = level;
 		}
@@ -34,35 +33,31 @@ public class ModEnchantmentHelper {
 
 	public static class EnchantmentListEntry {
 
-		private EnumEnchantmentList ench;
+		private EnumEnchantment ench;
 		private int index;
-		private GuiTextField tf;
+		private GuiIntTextField textField;
 
-		public EnchantmentListEntry(int index, EnumEnchantmentList ench, int widthIn, int heightIn) {
+		public EnchantmentListEntry(int index, EnumEnchantment ench, int widthIn, int heightIn) {
 			this.index = index;
 			this.ench = ench;
-			this.tf = new GuiTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + widthIn / 4, 0, 50, 15);
+			this.textField = new GuiIntTextField(index, Minecraft.getMinecraft().fontRendererObj, widthIn / 2 + widthIn / 4, 0, 30, 15);
 		}
 
-		public EnchantmentListEntry(int id, int level) {
-			this.ench = EnumEnchantmentList.getTypeFromID(id);
-		}
-
-		public EnumEnchantmentList getEnch() {
+		public EnumEnchantment getEnch() {
 			return ench;
 		}
 
 		public int getIndex() {
 			return index;
 		}
-
-		public GuiTextField getTextField() {
-			return tf;
+		
+		public GuiIntTextField getTextField() {
+			return textField;
 		}
 
 	}
 
-	public static enum EnumEnchantmentList {
+	public static enum EnumEnchantment {
 
 		PROTECTION_ALL("Protection", 0, EnumEnchantmentType.ARMOR), PROTECTION_FIRE("Fire Protection", 1,
 				EnumEnchantmentType.ARMOR), PROTECTION_FALL("Feather Falling", 2,
@@ -105,7 +100,7 @@ public class ModEnchantmentHelper {
 		private int id;
 		private EnumEnchantmentType type;
 
-		private EnumEnchantmentList(String name, int id, EnumEnchantmentType type) {
+		private EnumEnchantment(String name, int id, EnumEnchantmentType type) {
 			this.name = name;
 			this.id = id;
 			this.type = type;
@@ -125,13 +120,13 @@ public class ModEnchantmentHelper {
 
 		public static List<EnchantmentListEntry> getDefaults(int widthIn, int heightIn) {
 			List<EnchantmentListEntry> enchList = new ArrayList<EnchantmentListEntry>();
-			for (EnumEnchantmentList ench : values())
+			for (EnumEnchantment ench : values())
 				enchList.add(new EnchantmentListEntry(ench.ordinal(), ench, widthIn, heightIn));
 			return enchList;
 		}
 
-		public static EnumEnchantmentList getTypeFromID(int id) {
-			for (EnumEnchantmentList type : values())
+		public static EnumEnchantment getTypeFromID(int id) {
+			for (EnumEnchantment type : values())
 				if (id == type.getId())
 					return type;
 			return null;

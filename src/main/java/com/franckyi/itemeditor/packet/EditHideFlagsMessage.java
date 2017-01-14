@@ -3,10 +3,10 @@ package com.franckyi.itemeditor.packet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.franckyi.itemeditor.misc.HideFlagHelper;
-import com.franckyi.itemeditor.misc.SharedContent;
-import com.franckyi.itemeditor.misc.HideFlagHelper.EnumHideFlags;
-import com.franckyi.itemeditor.misc.HideFlagHelper.HideFlag;
+import com.franckyi.itemeditor.helper.HideFlagHelper;
+import com.franckyi.itemeditor.helper.ModHelper;
+import com.franckyi.itemeditor.helper.HideFlagHelper.EnumHideFlag;
+import com.franckyi.itemeditor.helper.HideFlagHelper.ItemHideFlag;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.IThreadListener;
@@ -16,46 +16,43 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class EditItemHideFlagsMessage implements IMessage{
-	
-	public EditItemHideFlagsMessage(){}
-	
-	private List<HideFlag> hideFlags;
-	
-	public EditItemHideFlagsMessage(List<HideFlag> hideFlags){
+public class EditHideFlagsMessage implements IMessage {
+
+	public EditHideFlagsMessage() {
+	}
+
+	private List<ItemHideFlag> hideFlags;
+
+	public EditHideFlagsMessage(List<ItemHideFlag> hideFlags) {
 		this.hideFlags = hideFlags;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		String bufFlags = ByteBufUtils.readUTF8String(buf);
-		hideFlags = new ArrayList<HideFlag>();
+		hideFlags = new ArrayList<ItemHideFlag>();
 		for (String flag : bufFlags.split(";"))
-			hideFlags.add(new HideFlag(EnumHideFlags.getFlagFromValue(Integer.parseInt(flag.split(":")[0])),
+			hideFlags.add(new ItemHideFlag(HideFlagHelper.getFlagFromValue(Integer.parseInt(flag.split(":")[0])),
 					Boolean.parseBoolean(flag.split(":")[1])));
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		String bufString = "";
-		for (HideFlag flag : hideFlags)
+		for (ItemHideFlag flag : hideFlags)
 			bufString += flag.getFlagValue() + ":" + flag.isDisplayed() + ";";
 		ByteBufUtils.writeUTF8String(buf, bufString.substring(0, bufString.length() - 1));
 	}
-	
-	public static class EditItemHideFlagsMessageHandler implements IMessageHandler<EditItemHideFlagsMessage, IMessage> {
+
+	public static class EditHideFlagsMessageHandler implements IMessageHandler<EditHideFlagsMessage, IMessage> {
 
 		@Override
-		public IMessage onMessage(final EditItemHideFlagsMessage message, final MessageContext ctx) {
+		public IMessage onMessage(final EditHideFlagsMessage message, final MessageContext ctx) {
 			IThreadListener mainThread = (WorldServer) ctx.getServerHandler().playerEntity.world;
 			mainThread.addScheduledTask(new Runnable() {
 				@Override
 				public void run() {
-					if(ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound() == null){
-						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getOrCreateSubCompound("test");
-						ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().removeTag("test");
-					}
-					ctx.getServerHandler().playerEntity.getHeldItemMainhand().getTagCompound().setInteger("HideFlags",
+					ModHelper.getOrCreateServerTagCompound().setInteger("HideFlags",
 							HideFlagHelper.value(message.hideFlags));
 				}
 			});

@@ -4,16 +4,12 @@ import java.io.IOException;
 
 import com.franckyi.itemeditor.ItemEditorMod;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
-public class GuiItemEditorMenu extends GuiScreen {
+public class GuiModMenu extends GuiScreen {
 
-	private GuiButton displayButton;
-	private GuiButton enchantmentsButton;
-	private GuiButton customEffectsButton;
-	private GuiButton exitButton;
+	private GuiButton displayButton, enchantmentsButton, attributesButton, exitButton, compactButton;
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
@@ -23,9 +19,13 @@ public class GuiItemEditorMenu extends GuiScreen {
 				this.mc.setIngameFocus();
 		}
 		if (button == this.displayButton)
-			switchGui(ItemEditorGuiHandler.ITEM_EDITOR_DISPLAY);
+			switchGui(ModGuiHandler.ITEM_EDITOR_DISPLAY);
 		if (button == this.enchantmentsButton)
-			switchGui(ItemEditorGuiHandler.ITEM_EDITOR_ENCHANT);
+			switchGui(ModGuiHandler.ITEM_EDITOR_ENCHANT);
+		if (button == this.attributesButton)
+			switchGui(ModGuiHandler.ITEM_EDITOR_ATTRIBUTES);
+		if (button == this.compactButton)
+			switchGui(ModGuiHandler.ITEM_EDITOR_COMPACT);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class GuiItemEditorMenu extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
-		this.drawString(fontRendererObj, "Item Editor Menu", this.width / 2 - 40, this.height / 2 - 90, 0xffffff);
+		this.drawString(fontRendererObj, "Item Editor Menu", this.width / 2 - 40, this.height / 2 - 90, 0x5555ff);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
@@ -46,11 +46,11 @@ public class GuiItemEditorMenu extends GuiScreen {
 				.add(this.displayButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 - 55, "Display"));
 		this.buttonList.add(
 				this.enchantmentsButton = new GuiButton(1, this.width / 2 - 100, this.height / 2 - 25, "Enchantments"));
-		this.buttonList.add(this.customEffectsButton = new GuiButton(2, this.width / 2 - 100, this.height / 2 + 5,
-				"Custom Effects [SOON]"));
+		this.buttonList.add(this.attributesButton = new GuiButton(2, this.width / 2 - 100, this.height / 2 + 5,
+				"Custom Effects [BETA]"));
 		this.buttonList.add(
 				this.exitButton = new GuiButton(3, this.width / 2 - 50, this.height / 2 + 35, 100, 20, "Exit Menu"));
-		this.buttonList.get(2).enabled = false;
+		buttonList.add(compactButton = new GuiButton(4, width-80, 0, 80, 20, "§6Compact Menu")); 
 	}
 
 	private void switchGui(int id) {

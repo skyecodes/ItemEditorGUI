@@ -1,5 +1,18 @@
 Changelog :
 
+1.11.x-0.1.0.0 :
+- Rewrite : GUI system (internal only)
+- Rewrite : ItemStack gestion (intenal only)
+- Rewrite : Events - you can now edit an item from your inventory
+- Rewrite : Changed some class' names (internal only)
+- Added : Attribute Modifiers support
+- Added : Unbreakable item ("Enchantments" menu)
+- Added : Colors everywhere!
+- Added : Config option "pauseGame"
+- Removed : Client-side updates, they're now server-side only (no big changes)
+- Fix : Empty lore lines not removing
+- Fix : Localization issues
+
 1.11.2-0.0.3.3 :
 - Fix : Button size in the 'Hide Flags' menu
 

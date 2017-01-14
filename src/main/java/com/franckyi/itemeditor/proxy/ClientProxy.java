@@ -7,15 +7,12 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy implements CommonProxy {
 
-	public static KeyBinding[] keyBindings;
+	public static KeyBinding keyBinding;
 
 	@Override
 	public void registerKeyBindings() {
-		keyBindings = new KeyBinding[1];
-		keyBindings[0] = new KeyBinding("key.gui.desc", Keyboard.KEY_I, "key.itemeditor.category");
-		for (KeyBinding keyBinding : keyBindings) {
-			ClientRegistry.registerKeyBinding(keyBinding);
-		}
+		keyBinding = new KeyBinding("key.itemeditor.open", Keyboard.KEY_I, "key.itemeditor.category");
+		ClientRegistry.registerKeyBinding(keyBinding);
 	}
 
 }
