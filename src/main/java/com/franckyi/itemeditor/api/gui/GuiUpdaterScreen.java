@@ -1,8 +1,6 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.api.gui;
 
 import java.io.IOException;
-
-import com.franckyi.itemeditor.ItemEditorMod;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,10 +8,16 @@ import net.minecraft.client.gui.GuiScreen;
 public abstract class GuiUpdaterScreen extends GuiScreen {
 
 	protected GuiButton cancelButton, doneButton;
+	
 	protected int previousScreen;
-
-	public GuiUpdaterScreen(int previousScreen) {
+	protected boolean doesGuiPauseGame;
+	protected Object modInstance;
+	
+	
+	public GuiUpdaterScreen(int previousScreen, boolean doesGuiPauseGame, Object modInstance) {
 		this.previousScreen = previousScreen;
+		this.doesGuiPauseGame = doesGuiPauseGame;
+		this.modInstance = modInstance;
 	}
 
 	@Override
@@ -32,7 +36,7 @@ public abstract class GuiUpdaterScreen extends GuiScreen {
 
 	@Override
 	public final boolean doesGuiPauseGame() {
-		return ItemEditorMod.config.pauseGame;
+		return doesGuiPauseGame;
 	}
 
 	public abstract void initGui();
@@ -40,7 +44,7 @@ public abstract class GuiUpdaterScreen extends GuiScreen {
 	protected abstract void updateServer();
 
 	protected void switchGui(int screen) {
-		mc.player.openGui(ItemEditorMod.instance, screen, mc.world, (int) mc.player.posX, (int) mc.player.posY,
+		mc.player.openGui(modInstance, screen, mc.world, (int) mc.player.posX, (int) mc.player.posY,
 				(int) mc.player.posZ);
 	}
 

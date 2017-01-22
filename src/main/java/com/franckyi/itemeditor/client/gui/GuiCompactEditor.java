@@ -1,38 +1,43 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
-import com.franckyi.itemeditor.gui.child.GuiDoubleTextField;
-import com.franckyi.itemeditor.gui.child.GuiEnchantList;
-import com.franckyi.itemeditor.gui.child.GuiEnumButton;
+import com.franckyi.itemeditor.api.gui.GuiDoubleTextField;
+import com.franckyi.itemeditor.api.gui.GuiEnumButton;
+import com.franckyi.itemeditor.api.gui.GuiFormatButton;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
+import com.franckyi.itemeditor.client.gui.child.GuiEnchantList;
+import com.franckyi.itemeditor.client.gui.child.GuiEnchantList.EnchantmentListEntry;
+import com.franckyi.itemeditor.client.gui.child.GuiLoreList.LoreListEntry;
+import com.franckyi.itemeditor.client.gui.child.GuiLoreList;
 import com.franckyi.itemeditor.helper.AttributeHelper;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeOperation;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeSlot;
 import com.franckyi.itemeditor.helper.AttributeHelper.ItemAttribute;
-import com.franckyi.itemeditor.helper.EnchantmentHelper.EnchantmentListEntry;
 import com.franckyi.itemeditor.helper.EnchantmentHelper.ItemEnchantment;
 import com.franckyi.itemeditor.helper.HideFlagHelper;
 import com.franckyi.itemeditor.helper.HideFlagHelper.ItemHideFlag;
 import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.packet.EditAttributesMessage;
-import com.franckyi.itemeditor.packet.EditEnchantMessage;
-import com.franckyi.itemeditor.packet.EditHideFlagsMessage;
-import com.franckyi.itemeditor.packet.EditLoreMessage;
-import com.franckyi.itemeditor.packet.EditNameMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditAttributesMessage;
+import com.franckyi.itemeditor.network.EditEnchantMessage;
+import com.franckyi.itemeditor.network.EditHideFlagsMessage;
+import com.franckyi.itemeditor.network.EditLoreMessage;
+import com.franckyi.itemeditor.network.EditNameMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
+import net.minecraftforge.fml.common.FMLLog;
 
 public class GuiCompactEditor extends GuiUpdaterScreen {
 
-	public GuiCompactEditor(int previousScreen, int guiScale) {
-		super(previousScreen);
+	public GuiCompactEditor(int previousScreen, int guiScale, boolean pauseGame, ItemEditorMod instance) {
+		super(previousScreen, pauseGame, instance);
 		previousGuiScale = guiScale;
 	}
 
@@ -42,16 +47,16 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 	private List<String> loresMessage = new ArrayList<String>();
 
 	private GuiTextField itemName;
-	private GuiTextField[] itemLores = new GuiTextField[ItemEditorMod.config.loreLineNumber];
 	private GuiDoubleTextField[] itemAttributes = new GuiDoubleTextField[5];
 
+	private GuiLoreList loreList;
+	
 	private GuiEnchantList enchList;
 	private GuiCheckBox unbreakable;
 
 	private GuiButton menuButton, reloadScreen;
 
-	private GuiButton nameFormatButton;
-	private GuiButton[] loreFormatButtons = new GuiButton[ItemEditorMod.config.loreLineNumber];
+	private GuiFormatButton nameFormatButton;
 	private GuiCheckBox[] hideFlags = new GuiCheckBox[6];
 	private GuiEnumButton<Integer>[] operations = new GuiEnumButton[5];
 	private GuiEnumButton<String>[] slots = new GuiEnumButton[5];
@@ -66,7 +71,7 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 		buttonList.add(reloadScreen = new GuiButton(105, width - 80, height - 20, 80, 20, "§3Reload Screen"));
 
 		itemName = new GuiTextField(1, fontRendererObj, width / 10, height / 8, 100, 20);
-		buttonList.add(nameFormatButton = new GuiButton(101, width / 10 + 110, height / 8, 20, 20, "§5§"));
+		buttonList.add(nameFormatButton = new GuiFormatButton(101, width / 10 + 110, height / 8, itemName));
 		itemName.setMaxStringLength(64);
 		if (ModHelper.currentItemName != null)
 			itemName.setText(ModHelper.currentItemName);
@@ -76,19 +81,10 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 		else
 			itemName.setText(ModHelper.clientStack.getDisplayName());
 		itemName.setFocused(true);
-
-		for (int i = 0; i < itemLores.length; i++) {
-			itemLores[i] = new GuiTextField(10 + i, fontRendererObj, width / 10, height / 8 + 40 + (30 * i), 100, 20);
-			buttonList.add(loreFormatButtons[i] = new GuiButton(110 + i, width / 10 + 110, height / 8 + 40 + (30 * i),
-					20, 20, "§5§"));
-			String lore = ModHelper.clientStack.getOrCreateSubCompound("display").getTagList("Lore", 8)
-					.getStringTagAt(i);
-			if (lore.startsWith("§r")) {
-				itemLores[i].setText(lore.substring(2, lore.length()));
-			} else {
-				itemLores[i].setText(lore);
-			}
-		}
+		
+		loreList = new GuiLoreList(mc, width/4, height/3 , height/8 + 70, height/8 + 70 + height/3, 20, 25, width, height, this);
+		for(LoreListEntry entry : loreList.getLoreList())
+			buttonList.add(entry.getFormatButton());
 
 		enchList = new GuiEnchantList(mc, 180, height - height / 4, height / 8, height - height / 8, width / 3 - 30, 25,
 				width, height, this);
@@ -133,16 +129,6 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 			this.switchGui(ModGuiHandler.ITEM_EDITOR_MENU);
 			this.switchGui(ModGuiHandler.ITEM_EDITOR_COMPACT);
 		}
-		if (button == this.nameFormatButton) {
-			itemName.setText(itemName.getText() + "§");
-			itemName.setFocused(true);
-		}
-		for (int i = 0; i < itemLores.length; i++) {
-			if (button == loreFormatButtons[i]) {
-				itemLores[i].setText(itemLores[i].getText() + "§");
-				itemLores[i].setFocused(true);
-			}
-		}
 		super.actionPerformed(button);
 		if (button == doneButton || button == cancelButton) {
 			this.mc.displayGuiScreen(null);
@@ -157,12 +143,10 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 		drawString(fontRendererObj, "Item Editor GUI [Compact]", width / 2 - width / 16, 10, 0x5555ff);
 		drawString(fontRendererObj, "Edit Display :", width / 10 + 10, height / 8 - 20, 0xffff00);
 		drawString(fontRendererObj, "Name :", width / 10 - 50, height / 8 + 6, 0xffffff);
-		drawString(fontRendererObj, "Edit Hide Flags :", width / 10 - 10, 7 * height / 10 - 20, 0xffff00);
+		drawString(fontRendererObj, "Edit Lore :", width / 10 + 15, height/8 + 50, 0xffff00);
+		drawString(fontRendererObj, "Edit Hide Flags :", width / 10 + 3, 7 * height / 10 - 20, 0xffff00);
 		itemName.drawTextBox();
-		for (int i = 0; i < itemLores.length; i++) {
-			itemLores[i].drawTextBox();
-			drawString(fontRendererObj, "Lore " + i + " :", width / 10 - 50, height / 8 + 46 + (30 * i), 0xffffff);
-		}
+		loreList.drawScreen(mouseX, mouseY, partialTicks);
 		drawString(fontRendererObj, "Edit Attributes :", 2 * width / 3 + 15, height / 3 - 20, 0xffff00);
 		for (int i = 0; i < itemAttributes.length; i++) {
 			itemAttributes[i].drawTextBox();
@@ -176,8 +160,8 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		itemName.textboxKeyTyped(typedChar, keyCode);
-		for (GuiTextField itemLore : itemLores)
-			itemLore.textboxKeyTyped(typedChar, keyCode);
+		for (LoreListEntry entry : loreList.getLoreList())
+			entry.getTextField().textboxKeyTyped(typedChar, keyCode);
 		for (EnchantmentListEntry ench : enchList.getEnchantmentList())
 			ench.getTextField().textboxKeyTyped(typedChar, keyCode);
 		for (GuiDoubleTextField itemAttribute : itemAttributes)
@@ -188,8 +172,8 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		itemName.mouseClicked(mouseX, mouseY, mouseButton);
-		for (GuiTextField itemLore : itemLores)
-			itemLore.mouseClicked(mouseX, mouseY, mouseButton);
+		for (LoreListEntry entry : loreList.getLoreList())
+			entry.getTextField().mouseClicked(mouseX, mouseY, mouseButton);
 		for (EnchantmentListEntry ench : enchList.getEnchantmentList())
 			ench.getTextField().mouseClicked(mouseX, mouseY, mouseButton);
 		for (GuiDoubleTextField itemAttribute : itemAttributes)
@@ -200,8 +184,8 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 	@Override
 	public void updateScreen() {
 		itemName.updateCursorCounter();
-		for (GuiTextField itemLore : itemLores)
-			itemLore.updateCursorCounter();
+		for (LoreListEntry entry : loreList.getLoreList())
+			entry.getTextField().updateCursorCounter();
 		for (EnchantmentListEntry ench : enchList.getEnchantmentList())
 			ench.getTextField().updateCursorCounter();
 		for (GuiDoubleTextField itemAttribute : itemAttributes)
@@ -218,9 +202,9 @@ public class GuiCompactEditor extends GuiUpdaterScreen {
 	@Override
 	protected void updateServer() {
 		ModPacketHandler.INSTANCE.sendToServer(new EditNameMessage(itemName.getText()));
-		for (GuiTextField tf : itemLores)
-			if (tf.getText() != "")
-				loresMessage.add("§r" + tf.getText());
+		for (LoreListEntry entry : loreList.getLoreList())
+			if(!entry.getTextField().getText().equals(""))
+				loresMessage.add(entry.getTextField().getText());
 		ModPacketHandler.INSTANCE.sendToServer(new EditLoreMessage(loresMessage));
 		for (int i = 0; i < enchList.getEnchantmentList().size(); i++) {
 			if (enchList.getEnchantmentList().get(i).getTextField().getText().equals(""))

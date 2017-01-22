@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.gui.child;
+package com.franckyi.itemeditor.api.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
-public class GuiEnumButton<V> extends GuiButton {
+public class GuiEnumButton<V> extends GuiZButton {
 
 	private List<IEnumButtonField> fields = new ArrayList<IEnumButtonField>();
 	private int i = 0;
@@ -23,7 +23,7 @@ public class GuiEnumButton<V> extends GuiButton {
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		if (mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width
-				&& mouseY < this.yPosition + this.height) {
+				&& mouseY < this.yPosition + this.height && this.enabled) {
 			i = (i != fields.size() - 1) ? i + 1 : 0;
 			displayString = fields.get(i).getButtonText();
 		}

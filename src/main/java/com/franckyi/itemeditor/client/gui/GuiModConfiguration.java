@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.ModReference;

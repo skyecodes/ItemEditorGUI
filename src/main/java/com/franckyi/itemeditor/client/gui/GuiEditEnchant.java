@@ -1,23 +1,25 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.franckyi.itemeditor.gui.child.GuiEnchantList;
-import com.franckyi.itemeditor.helper.EnchantmentHelper.EnchantmentListEntry;
+import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
+import com.franckyi.itemeditor.client.gui.child.GuiEnchantList;
+import com.franckyi.itemeditor.client.gui.child.GuiEnchantList.EnchantmentListEntry;
 import com.franckyi.itemeditor.helper.EnchantmentHelper.ItemEnchantment;
 import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.packet.EditEnchantMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditEnchantMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiEditEnchant extends GuiUpdaterScreen {
 
-	public GuiEditEnchant(int previousScreen) {
-		super(previousScreen);
+	public GuiEditEnchant(int previousScreen, boolean pauseGame, ItemEditorMod instance) {
+		super(previousScreen, pauseGame, instance);
 	}
 
 	private List<ItemEnchantment> enchantmentMessage = new ArrayList<ItemEnchantment>();

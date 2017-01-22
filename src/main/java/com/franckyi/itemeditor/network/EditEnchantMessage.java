@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.packet;
+package com.franckyi.itemeditor.network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class EditEnchantMessage implements IMessage {
 	public EditEnchantMessage() {
 	}
 
-	private List<ItemEnchantment> enchants;
+	private List<ItemEnchantment> enchants = new ArrayList<ItemEnchantment>();
 
 	public EditEnchantMessage(List<ItemEnchantment> message) {
 		this.enchants = message;
@@ -28,19 +28,19 @@ public class EditEnchantMessage implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		enchants = new ArrayList<ItemEnchantment>();
-		String[] bufEnchants = ByteBufUtils.readUTF8String(buf).split(";");
-		for (String enchant : bufEnchants)
-			enchants.add(new ItemEnchantment(Integer.parseInt(enchant.split(":")[0]),
-					Integer.parseInt(enchant.split(":")[1])));
+		String ench = ByteBufUtils.readUTF8String(buf);
+		String[] part;
+		while (ench != null && !ench.equals("")){
+			part = ench.split(":");
+			enchants.add(new ItemEnchantment(Integer.parseInt(part[0]), Integer.parseInt(part[1])));
+			ench = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
+		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		String bufEnchants = "";
 		for (ItemEnchantment enchant : enchants)
-			bufEnchants += enchant.getEnch() + ":" + enchant.getLevel() + ";";
-		ByteBufUtils.writeUTF8String(buf, bufEnchants.substring(0, bufEnchants.length() - 1));
+			ByteBufUtils.writeUTF8String(buf, enchant.getEnch() + ":" + enchant.getLevel());
 	}
 
 	public static class EditEnchantMessageHandler implements IMessageHandler<EditEnchantMessage, IMessage> {

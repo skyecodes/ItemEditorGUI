@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.packet;
+package com.franckyi.itemeditor.network;
 
 import com.franckyi.itemeditor.helper.ModHelper;
 

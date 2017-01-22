@@ -1,6 +1,6 @@
 package com.franckyi.itemeditor.helper;
 
-import com.franckyi.itemeditor.gui.child.IEnumButtonField;
+import com.franckyi.itemeditor.api.gui.IEnumButtonField;
 
 public class AttributeHelper {
 

@@ -1,20 +1,22 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
 import com.franckyi.itemeditor.helper.HideFlagHelper;
 import com.franckyi.itemeditor.helper.HideFlagHelper.ItemHideFlag;
-import com.franckyi.itemeditor.packet.EditHideFlagsMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditHideFlagsMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 public class GuiEditHideFlags extends GuiUpdaterScreen {
 
-	public GuiEditHideFlags(int previousScreen) {
-		super(previousScreen);
+	public GuiEditHideFlags(int previousScreen, boolean pauseGame, ItemEditorMod instance) {
+		super(previousScreen, pauseGame, instance);
 	}
 
 	private List<ItemHideFlag> hideFlagsMessage = new ArrayList<ItemHideFlag>();

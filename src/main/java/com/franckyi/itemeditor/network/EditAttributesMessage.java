@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.packet;
+package com.franckyi.itemeditor.network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class EditAttributesMessage implements IMessage {
 	public EditAttributesMessage() {
 	}
 
-	private List<ItemAttribute> attributes;
+	private List<ItemAttribute> attributes = new ArrayList<ItemAttribute>();
 
 	public EditAttributesMessage(List<ItemAttribute> attributes) {
 		this.attributes = attributes;
@@ -31,22 +31,21 @@ public class EditAttributesMessage implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		String[] bufAttr = ByteBufUtils.readUTF8String(buf).split(";");
-		attributes = new ArrayList<ItemAttribute>();
-		for (String attr : bufAttr) {
-			String[] split = attr.split(":");
-			attributes.add(new ItemAttribute(AttributeHelper.getAttributeFromName(split[0]),
-					Double.parseDouble(split[1]), Integer.parseInt(split[2]), split[3]));
+		String attr = ByteBufUtils.readUTF8String(buf);
+		String[] part;
+		while(attr != null && !attr.equals("")) {
+			part = attr.split(":");
+			attributes.add(new ItemAttribute(AttributeHelper.getAttributeFromName(part[0]),
+					Double.parseDouble(part[1]), Integer.parseInt(part[2]), part[3]));
+			attr = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
 		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		String bufAttr = "";
 		for (ItemAttribute attr : attributes)
-			bufAttr += attr.getAttribute().getName() + ":" + attr.getAmount() + ":" + attr.getOperation() + ":"
-					+ attr.getSlot() + ";";
-		ByteBufUtils.writeUTF8String(buf, bufAttr.substring(0, bufAttr.length() - 1));
+			ByteBufUtils.writeUTF8String(buf,attr.getAttribute().getName() + ":" + attr.getAmount() + ":" + attr.getOperation() + ":"
+					+ attr.getSlot());
 	}
 
 	public static class EditAttributesMessageHandler implements IMessageHandler<EditAttributesMessage, IMessage> {

@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.gui.child;
+package com.franckyi.itemeditor.api.gui;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;

@@ -1,26 +1,28 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.franckyi.itemeditor.gui.child.GuiDoubleTextField;
-import com.franckyi.itemeditor.gui.child.GuiEnumButton;
+import com.franckyi.itemeditor.ItemEditorMod;
+import com.franckyi.itemeditor.api.gui.GuiDoubleTextField;
+import com.franckyi.itemeditor.api.gui.GuiEnumButton;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
 import com.franckyi.itemeditor.helper.AttributeHelper;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeOperation;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeSlot;
 import com.franckyi.itemeditor.helper.AttributeHelper.ItemAttribute;
+import com.franckyi.itemeditor.network.EditAttributesMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.packet.EditAttributesMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 
 public class GuiEditAttributes extends GuiUpdaterScreen {
 
-	public GuiEditAttributes(int previousScreen) {
-		super(previousScreen);
+	public GuiEditAttributes(int previousScreen, boolean pauseGame, ItemEditorMod instance) {
+		super(previousScreen, pauseGame, instance);
 	}
 
 	private List<ItemAttribute> attributesMessage = new ArrayList<ItemAttribute>();

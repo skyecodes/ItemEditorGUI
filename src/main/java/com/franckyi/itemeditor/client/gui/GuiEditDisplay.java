@@ -1,29 +1,28 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
 import java.io.IOException;
 
+import com.franckyi.itemeditor.api.gui.GuiFormatButton;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
 import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.packet.EditNameMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditNameMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 
 public class GuiEditDisplay extends GuiUpdaterScreen {
 
-	public GuiEditDisplay(int previousScreen) {
-		super(previousScreen);
+	public GuiEditDisplay(int previousScreen, boolean pauseGame, Object instance) {
+		super(previousScreen, pauseGame, instance);
 	}
 
-	private GuiButton nameFormatButton, loreButton, hideFlagsButton;
+	private GuiFormatButton nameFormatButton;
+	private GuiButton loreButton, hideFlagsButton;
 	private GuiTextField itemName;
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if (button == this.nameFormatButton) {
-			itemName.setText(itemName.getText() + "§");
-			itemName.setFocused(true);
-		}
 		if (button == this.loreButton) {
 			ModHelper.currentItemName = itemName.getText();
 			switchGui(ModGuiHandler.ITEM_EDITOR_LORE);
@@ -32,6 +31,8 @@ public class GuiEditDisplay extends GuiUpdaterScreen {
 			ModHelper.currentItemName = itemName.getText();
 			switchGui(ModGuiHandler.ITEM_EDITOR_HIDEFLAGS);
 		}
+		if (button == this.cancelButton || button == this.doneButton)
+			ModHelper.currentItemName = null;
 		super.actionPerformed(button);
 	}
 
@@ -48,7 +49,7 @@ public class GuiEditDisplay extends GuiUpdaterScreen {
 		buttonList.add(doneButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 + 35, 90, 20, "§2Done"));
 		buttonList.add(cancelButton = new GuiButton(1, this.width / 2 + 10, this.height / 2 + 35, 90, 20, "§4Cancel"));
 		itemName = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 50, this.height / 2 - 55, 120, 20);
-		buttonList.add(nameFormatButton = new GuiButton(2, this.width / 2 + 80, this.height / 2 - 55, 20, 20, "§5§"));
+		buttonList.add(nameFormatButton = new GuiFormatButton(2, this.width / 2 + 80, this.height / 2 - 55, itemName));
 		buttonList.add(loreButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 30, "Edit Lore..."));
 		buttonList.add(
 				hideFlagsButton = new GuiButton(3, this.width / 2 - 100, this.height / 2 - 5, "Edit Hide Flags..."));

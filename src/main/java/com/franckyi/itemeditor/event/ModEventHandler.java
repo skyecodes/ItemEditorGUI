@@ -4,15 +4,15 @@ import org.lwjgl.input.Keyboard;
 
 import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.ModReference;
-import com.franckyi.itemeditor.gui.ModGuiHandler;
+import com.franckyi.itemeditor.client.gui.ModGuiHandler;
 import com.franckyi.itemeditor.helper.ModHelper;
-import com.franckyi.itemeditor.packet.GetClientStackMessage;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.GetClientStackMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
 import com.franckyi.itemeditor.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.TextComponentString;
@@ -31,22 +31,25 @@ public class ModEventHandler {
 	public void onKeyPressed(KeyboardInputEvent.Post e) {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if (Keyboard.getEventKey() == ClientProxy.keyBinding.getKeyCode() && Keyboard.getEventKeyState() == true)
-			if (e.getGui() instanceof GuiContainerCreative
-					&& Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)) {
-				GuiContainerCreative inventoryScreen = ((GuiContainerCreative) e.getGui());
+			if (e.getGui() instanceof GuiContainer
+					&& (Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)
+							|| !ItemEditorMod.config.creativeModeOnly)) {
+				GuiContainer inventoryScreen = ((GuiContainer) e.getGui());
 				if (inventoryScreen.getSlotUnderMouse() != null)
 					if (inventoryScreen.getSlotUnderMouse().getHasStack())
 						if (inventoryScreen.getSlotUnderMouse().inventory.equals(player.inventory)) {
-							ModHelper.clientStack = ((GuiContainerCreative) e.getGui()).getSlotUnderMouse().getStack();
+							ModHelper.clientStack = ((GuiContainer) e.getGui()).getSlotUnderMouse().getStack();
 							ModPacketHandler.INSTANCE.sendToServer(
 									new GetClientStackMessage(player.inventory.getSlotFor(ModHelper.clientStack)));
 							player.openGui(ItemEditorMod.instance, ModGuiHandler.getDefaultGui(),
 									Minecraft.getMinecraft().world, (int) player.posX, (int) player.posY,
 									(int) player.posZ);
-						}
+						} else
+							player.sendMessage(new TextComponentString(
+									TextFormatting.RED + "[" + ModReference.NAME + "] You select an item in your inventory."));
 			} else
 				player.sendMessage(new TextComponentString(
-						TextFormatting.RED + "[" + ModReference.NAME + "] You must be in your Creative inventory."));
+						TextFormatting.RED + "[" + ModReference.NAME + "] You must be in Creative mode."));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -55,7 +58,8 @@ public class ModEventHandler {
 		if (ClientProxy.keyBinding.isPressed() && Minecraft.getMinecraft().currentScreen == null) {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			if (!player.getHeldItemMainhand().getItem().equals(Item.getItemFromBlock(Blocks.AIR))
-					&& Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)) {
+					&& (Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)
+							|| !ItemEditorMod.config.creativeModeOnly)) {
 				ModHelper.clientStack = player.getHeldItemMainhand();
 				ModPacketHandler.INSTANCE
 						.sendToServer(new GetClientStackMessage(player.inventory.getSlotFor(ModHelper.clientStack)));

@@ -1,6 +1,13 @@
 Changelog :
 
-1.11.x-0.1.0.0 :
+1.11.x-0.1.0.0-beta2 :
+- Rewrite : Networking (internal only)
+- Added : List for the Lore section
+- Added : Format button texture
+- Added : Forge auto-updater support
+- Added : More custom GUI classes (internal only)
+
+1.11.x-0.1.0.0-beta1 :
 - Rewrite : GUI system (internal only)
 - Rewrite : ItemStack gestion (intenal only)
 - Rewrite : Events - you can now edit an item from your inventory

@@ -1,8 +1,10 @@
-package com.franckyi.itemeditor.packet;
+package com.franckyi.itemeditor.network;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.helper.ModHelper;
 
 import io.netty.buffer.ByteBuf;
@@ -20,7 +22,7 @@ public class EditLoreMessage implements IMessage {
 	public EditLoreMessage() {
 	}
 
-	private List<String> lores;
+	private List<String> lores = new ArrayList<String>();
 
 	public EditLoreMessage(List<String> message) {
 		this.lores = message;
@@ -29,22 +31,16 @@ public class EditLoreMessage implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		String bufLore = ByteBufUtils.readUTF8String(buf);
-		lores = Arrays.asList(bufLore.split("§§"));
-		for (int i = 1; i < lores.size(); i++) {
-			lores.set(i, "§" + lores.get(i));
+		while(bufLore != null && !bufLore.equals("")){
+			lores.add(bufLore);
+			bufLore = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
 		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		String bufLore = "";
-		for (String lore : lores) {
-			bufLore += lore + "§";
-		}
-		if (bufLore.equals(""))
-			ByteBufUtils.writeUTF8String(buf, "§r");
-		else
-			ByteBufUtils.writeUTF8String(buf, bufLore.substring(0, bufLore.length() - 1));
+		for (String lore : lores)
+			ByteBufUtils.writeUTF8String(buf, lore);
 	}
 
 	public static class EditLoreMessageHandler implements IMessageHandler<EditLoreMessage, IMessage> {
@@ -56,10 +52,10 @@ public class EditLoreMessage implements IMessage {
 				@Override
 				public void run() {
 					ModHelper.serverStack.getOrCreateSubCompound("display").setTag("Lore", new NBTTagList());
-					for (int i = 0; i < message.lores.size(); i++)
+					for (int i = 0; i < ItemEditorMod.config.loreLineNumber; i++)
 						if (!message.lores.get(i).equals("§r"))
 							ModHelper.serverStack.getOrCreateSubCompound("display").getTagList("Lore", 8)
-									.appendTag(new NBTTagString(message.lores.get(i)));
+									.appendTag(new NBTTagString("§r" + message.lores.get(i)));
 				}
 			});
 			return null;

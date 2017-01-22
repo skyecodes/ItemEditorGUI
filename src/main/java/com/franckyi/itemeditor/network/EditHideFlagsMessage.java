@@ -1,4 +1,4 @@
-package com.franckyi.itemeditor.packet;
+package com.franckyi.itemeditor.network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class EditHideFlagsMessage implements IMessage {
 	public EditHideFlagsMessage() {
 	}
 
-	private List<ItemHideFlag> hideFlags;
+	private List<ItemHideFlag> hideFlags = new ArrayList<ItemHideFlag>();
 
 	public EditHideFlagsMessage(List<ItemHideFlag> hideFlags) {
 		this.hideFlags = hideFlags;
@@ -28,19 +28,20 @@ public class EditHideFlagsMessage implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		String bufFlags = ByteBufUtils.readUTF8String(buf);
-		hideFlags = new ArrayList<ItemHideFlag>();
-		for (String flag : bufFlags.split(";"))
-			hideFlags.add(new ItemHideFlag(HideFlagHelper.getFlagFromValue(Integer.parseInt(flag.split(":")[0])),
-					Boolean.parseBoolean(flag.split(":")[1])));
+		String flag = ByteBufUtils.readUTF8String(buf);
+		String[] part;
+		while(flag != null && !flag.equals("")){
+			part = flag.split(":");
+			hideFlags.add(new ItemHideFlag(HideFlagHelper.getFlagFromValue(Integer.parseInt(part[0])),
+					Boolean.parseBoolean(part[1])));
+			flag = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
+		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		String bufString = "";
 		for (ItemHideFlag flag : hideFlags)
-			bufString += flag.getFlagValue() + ":" + flag.isDisplayed() + ";";
-		ByteBufUtils.writeUTF8String(buf, bufString.substring(0, bufString.length() - 1));
+			ByteBufUtils.writeUTF8String(buf, flag.getFlagValue() + ":" + flag.isDisplayed());
 	}
 
 	public static class EditHideFlagsMessageHandler implements IMessageHandler<EditHideFlagsMessage, IMessage> {

@@ -3,9 +3,9 @@ package com.franckyi.itemeditor.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.franckyi.itemeditor.gui.child.GuiIntTextField;
+import com.franckyi.itemeditor.api.gui.GuiIntTextField;
+import com.franckyi.itemeditor.client.gui.child.GuiEnchantList.EnchantmentListEntry;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnumEnchantmentType;
 
 public class EnchantmentHelper {
@@ -26,33 +26,6 @@ public class EnchantmentHelper {
 
 		public int getLevel() {
 			return level;
-		}
-
-	}
-
-	public static class EnchantmentListEntry {
-
-		private EnumEnchantment ench;
-		private int index;
-		private GuiIntTextField textField;
-
-		public EnchantmentListEntry(int index, EnumEnchantment ench, int widthIn, int heightIn) {
-			this.index = index;
-			this.ench = ench;
-			this.textField = new GuiIntTextField(index, Minecraft.getMinecraft().fontRendererObj,
-					widthIn / 2 + widthIn / 4, 0, 30, 15);
-		}
-
-		public EnumEnchantment getEnch() {
-			return ench;
-		}
-
-		public int getIndex() {
-			return index;
-		}
-
-		public GuiIntTextField getTextField() {
-			return textField;
 		}
 
 	}

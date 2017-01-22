@@ -1,16 +1,17 @@
-package com.franckyi.itemeditor.gui.child;
+package com.franckyi.itemeditor.client.gui.child;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
-import com.franckyi.itemeditor.gui.GuiUpdaterScreen;
-import com.franckyi.itemeditor.helper.EnchantmentHelper.EnchantmentListEntry;
+import com.franckyi.itemeditor.api.gui.GuiIntTextField;
+import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
 import com.franckyi.itemeditor.helper.EnchantmentHelper.EnumEnchantment;
 import com.franckyi.itemeditor.helper.ModHelper;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,11 +20,11 @@ import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GuiEnchantList extends GuiScrollingList {
 
-	private GuiUpdaterScreen parent;
+	private GuiScreen parent;
 	private List<EnchantmentListEntry> enchList;
 
 	public GuiEnchantList(final Minecraft mcIn, int widthIn, int heightIn, int topIn, int bottomIn, int leftIn,
-			int slotHeightIn, int screenWidthIn, int screenHeightIn, GuiUpdaterScreen parent) {
+			int slotHeightIn, int screenWidthIn, int screenHeightIn, GuiScreen parent) {
 		super(mcIn, widthIn, heightIn, topIn, bottomIn, leftIn, slotHeightIn, screenWidthIn, screenHeightIn);
 		this.parent = parent;
 		enchList = new ArrayList<EnchantmentListEntry>();
@@ -102,6 +103,33 @@ public class GuiEnchantList extends GuiScrollingList {
 			parent.drawString(Minecraft.getMinecraft().fontRendererObj, enchList.get(slotIdx).getEnch().getName(),
 					left + 10, slotTop + 5, 0xffffff);
 		}
+	}
+	
+	public static class EnchantmentListEntry {
+
+		private EnumEnchantment ench;
+		private int index;
+		private GuiIntTextField textField;
+
+		public EnchantmentListEntry(int index, EnumEnchantment ench, int widthIn, int heightIn) {
+			this.index = index;
+			this.ench = ench;
+			this.textField = new GuiIntTextField(index, Minecraft.getMinecraft().fontRendererObj,
+					widthIn / 2 + widthIn / 4, 0, 30, 15);
+		}
+
+		public EnumEnchantment getEnch() {
+			return ench;
+		}
+
+		public int getIndex() {
+			return index;
+		}
+
+		public GuiIntTextField getTextField() {
+			return textField;
+		}
+
 	}
 
 }

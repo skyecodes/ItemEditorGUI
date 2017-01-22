@@ -1,21 +1,21 @@
 package com.franckyi.itemeditor;
 
+import com.franckyi.itemeditor.client.gui.ModGuiHandler;
 import com.franckyi.itemeditor.config.ModConfiguration;
 import com.franckyi.itemeditor.event.ModEventHandler;
-import com.franckyi.itemeditor.gui.ModGuiHandler;
-import com.franckyi.itemeditor.packet.EditAttributesMessage;
-import com.franckyi.itemeditor.packet.EditAttributesMessage.EditAttributesMessageHandler;
-import com.franckyi.itemeditor.packet.EditEnchantMessage;
-import com.franckyi.itemeditor.packet.EditEnchantMessage.EditEnchantMessageHandler;
-import com.franckyi.itemeditor.packet.EditHideFlagsMessage;
-import com.franckyi.itemeditor.packet.EditHideFlagsMessage.EditHideFlagsMessageHandler;
-import com.franckyi.itemeditor.packet.EditLoreMessage;
-import com.franckyi.itemeditor.packet.EditLoreMessage.EditLoreMessageHandler;
-import com.franckyi.itemeditor.packet.EditNameMessage;
-import com.franckyi.itemeditor.packet.EditNameMessage.EditNameMessageHandler;
-import com.franckyi.itemeditor.packet.GetClientStackMessage;
-import com.franckyi.itemeditor.packet.GetClientStackMessage.GetClientStackMessageHandler;
-import com.franckyi.itemeditor.packet.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditAttributesMessage;
+import com.franckyi.itemeditor.network.EditEnchantMessage;
+import com.franckyi.itemeditor.network.EditHideFlagsMessage;
+import com.franckyi.itemeditor.network.EditLoreMessage;
+import com.franckyi.itemeditor.network.EditNameMessage;
+import com.franckyi.itemeditor.network.GetClientStackMessage;
+import com.franckyi.itemeditor.network.ModPacketHandler;
+import com.franckyi.itemeditor.network.EditAttributesMessage.EditAttributesMessageHandler;
+import com.franckyi.itemeditor.network.EditEnchantMessage.EditEnchantMessageHandler;
+import com.franckyi.itemeditor.network.EditHideFlagsMessage.EditHideFlagsMessageHandler;
+import com.franckyi.itemeditor.network.EditLoreMessage.EditLoreMessageHandler;
+import com.franckyi.itemeditor.network.EditNameMessage.EditNameMessageHandler;
+import com.franckyi.itemeditor.network.GetClientStackMessage.GetClientStackMessageHandler;
 import com.franckyi.itemeditor.proxy.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = ModReference.MODID, name = ModReference.NAME, version = ModReference.VERSION, acceptedMinecraftVersions = ModReference.MCVERSION, guiFactory = ModReference.GUI_FACTORY_CLASS)
+@Mod(modid = ModReference.MODID, name = ModReference.NAME, version = ModReference.VERSION, acceptedMinecraftVersions = ModReference.MCVERSION, guiFactory = ModReference.GUI_FACTORY_CLASS, updateJSON = ModReference.UPDATE_JSON)
 public class ItemEditorMod {
 
 	@Instance

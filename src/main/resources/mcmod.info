@@ -3,7 +3,7 @@
   "modid": "itemeditor",
   "name": "Item Editor GUI",
   "description": "Edit item's enchants, display name/lore and more !",
-  "version": "1.11.x-0.1.0.0-beta1",
+  "version": "1.11.x-0.1.0.0-beta2",
   "mcversion": "[1.11,1.11.2]",
   "url": "https://minecraft.curseforge.com/projects/item-editor-gui",
   "updateUrl": "",

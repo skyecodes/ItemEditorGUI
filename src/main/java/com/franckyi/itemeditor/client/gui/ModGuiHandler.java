@@ -1,5 +1,6 @@
-package com.franckyi.itemeditor.gui;
+package com.franckyi.itemeditor.client.gui;
 
+import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.config.ModConfiguration;
 
 import net.minecraft.client.Minecraft;
@@ -23,19 +24,19 @@ public class ModGuiHandler implements IGuiHandler {
 		case (ITEM_EDITOR_MENU):
 			return new GuiModMenu();
 		case (ITEM_EDITOR_DISPLAY):
-			return new GuiEditDisplay(ITEM_EDITOR_MENU);
+			return new GuiEditDisplay(ITEM_EDITOR_MENU, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		case (ITEM_EDITOR_LORE):
-			return new GuiEditLore(ITEM_EDITOR_DISPLAY);
+			return new GuiEditLore(ITEM_EDITOR_DISPLAY, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		case (ITEM_EDITOR_ENCHANT):
-			return new GuiEditEnchant(ITEM_EDITOR_MENU);
+			return new GuiEditEnchant(ITEM_EDITOR_MENU, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		case (ITEM_EDITOR_HIDEFLAGS):
-			return new GuiEditHideFlags(ITEM_EDITOR_DISPLAY);
+			return new GuiEditHideFlags(ITEM_EDITOR_DISPLAY, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		case (ITEM_EDITOR_ATTRIBUTES):
-			return new GuiEditAttributes(ITEM_EDITOR_MENU);
+			return new GuiEditAttributes(ITEM_EDITOR_MENU, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		case (ITEM_EDITOR_COMPACT):
 			int guiScale = new Integer(Minecraft.getMinecraft().gameSettings.guiScale);
 			Minecraft.getMinecraft().gameSettings.guiScale = getScaleFromWindowSize();
-			return new GuiCompactEditor(ITEM_EDITOR_MENU, guiScale);
+			return new GuiCompactEditor(ITEM_EDITOR_MENU, guiScale, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
 		default:
 			return null;
 		}
@@ -47,7 +48,7 @@ public class ModGuiHandler implements IGuiHandler {
 	}
 
 	public static int getDefaultGui() {
-		return (ModConfiguration.preferCompactInterface) ? ITEM_EDITOR_COMPACT : ITEM_EDITOR_MENU;
+		return (ItemEditorMod.config.preferCompactInterface) ? ITEM_EDITOR_COMPACT : ITEM_EDITOR_MENU;
 	}
 
 	private int getScaleFromWindowSize() {
