@@ -46,7 +46,7 @@ public class ModEventHandler {
 									(int) player.posZ);
 						} else
 							player.sendMessage(new TextComponentString(TextFormatting.RED + "[" + ModReference.NAME
-									+ "] You select an item in your inventory."));
+									+ "] You must select an item in your inventory."));
 			} else
 				player.sendMessage(new TextComponentString(
 						TextFormatting.RED + "[" + ModReference.NAME + "] You must be in Creative mode."));
