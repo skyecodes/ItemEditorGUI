@@ -8,7 +8,7 @@
     "1.11.2-0.0.1.4": "Updated forge to 1.11.2-13.20.0.2206",
     "1.11.2-0.0.2.0": "Added temporary buttons to scroll in the Enchantment list, added safeEnchantmentsFirst and globalEnchantmentsLast config options",
     "1.11.2-0.0.2.1": "Added config GUI - no need to restart the game or the world, changes apply directly !",
-    "1.11.2-0.0.2.2": "Added "Display Enchantments" option",
+    "1.11.2-0.0.2.2": "Added 'Display Enchantments' option",
     "1.11.2-0.0.3.0": "Added Hide Flags support, rewritten Enchantment screen, fixed crash when trying to open the GUI in survival mode or without item in hand",
     "1.11.2-0.0.3.1": "Fixed crash when editing Hide Flags of a new item",
     "1.11.2-0.0.3.2": "Added support to all HideFlags, fixed minor bugs",
