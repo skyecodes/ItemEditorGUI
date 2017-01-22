@@ -17,7 +17,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GuiLoreList extends GuiScrollingList {
-	
+
 	private GuiScreen parent;
 	private List<LoreListEntry> loreList = new ArrayList<LoreListEntry>();
 
@@ -26,10 +26,11 @@ public class GuiLoreList extends GuiScrollingList {
 		super(client, width, height, top, bottom, left, entryHeight, screenWidth, screenHeight);
 		this.parent = parent;
 		NBTTagList lores = ModHelper.clientStack.getOrCreateSubCompound("display").getTagList("Lore", NBT.TAG_STRING);
-		for(int i = 0; i < ItemEditorMod.config.loreLineNumber; i++){
+		for (int i = 0; i < ItemEditorMod.config.loreLineNumber; i++) {
 			loreList.add(new LoreListEntry(i));
-			if(i < lores.tagCount())	
-				loreList.get(i).textField.setText((lores.getStringTagAt(i).startsWith("§r")) ? lores.getStringTagAt(i).substring(2) : lores.getStringTagAt(i));
+			if (i < lores.tagCount())
+				loreList.get(i).textField.setText((lores.getStringTagAt(i).startsWith("§r"))
+						? lores.getStringTagAt(i).substring(2) : lores.getStringTagAt(i));
 		}
 	}
 
@@ -39,7 +40,8 @@ public class GuiLoreList extends GuiScrollingList {
 	}
 
 	@Override
-	protected void elementClicked(int index, boolean doubleClick) {	}
+	protected void elementClicked(int index, boolean doubleClick) {
+	}
 
 	@Override
 	protected boolean isSelected(int index) {
@@ -47,7 +49,8 @@ public class GuiLoreList extends GuiScrollingList {
 	}
 
 	@Override
-	protected void drawBackground() { }
+	protected void drawBackground() {
+	}
 
 	@Override
 	protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
@@ -59,24 +62,25 @@ public class GuiLoreList extends GuiScrollingList {
 		entry.textField.drawTextBox();
 		entry.formatButton.xPosition = entryRight - 30;
 		entry.formatButton.yPosition = slotTop;
-		entry.formatButton.visible = (entry.formatButton.yPosition > this.top && entry.formatButton.yPosition + 20 < this.bottom);
+		entry.formatButton.visible = (entry.formatButton.yPosition > this.top
+				&& entry.formatButton.yPosition + 20 < this.bottom);
 		entry.formatButton.enabled = entry.formatButton.visible;
 	}
-	
-	public List<LoreListEntry> getLoreList(){
+
+	public List<LoreListEntry> getLoreList() {
 		return loreList;
 	}
-	
+
 	public class LoreListEntry {
-		
+
 		private int index;
 		private GuiTextField textField;
 		private GuiFormatButton formatButton;
-		
-		public LoreListEntry(int index){
+
+		public LoreListEntry(int index) {
 			this.index = index;
-			this.textField = new GuiTextField((index+1)*10, parent.mc.fontRendererObj, 0, 0, 50, 20);
-			this.formatButton = new GuiFormatButton((index+1)*20, 0, 0, textField, 1);
+			this.textField = new GuiTextField((index + 1) * 10, parent.mc.fontRendererObj, 0, 0, 50, 20);
+			this.formatButton = new GuiFormatButton((index + 1) * 20, 0, 0, textField, 1);
 			this.formatButton.enabled = false;
 			this.formatButton.visible = false;
 			this.textField.mouseClicked(10, 45, 0);
@@ -90,7 +94,7 @@ public class GuiLoreList extends GuiScrollingList {
 		public GuiButton getFormatButton() {
 			return formatButton;
 		}
-		
+
 	}
 
 }

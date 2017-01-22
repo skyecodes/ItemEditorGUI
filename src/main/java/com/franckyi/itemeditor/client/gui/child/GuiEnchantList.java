@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.api.gui.GuiIntTextField;
-import com.franckyi.itemeditor.api.gui.GuiUpdaterScreen;
 import com.franckyi.itemeditor.helper.EnchantmentHelper.EnumEnchantment;
 import com.franckyi.itemeditor.helper.ModHelper;
 
@@ -104,7 +103,7 @@ public class GuiEnchantList extends GuiScrollingList {
 					left + 10, slotTop + 5, 0xffffff);
 		}
 	}
-	
+
 	public static class EnchantmentListEntry {
 
 		private EnumEnchantment ench;

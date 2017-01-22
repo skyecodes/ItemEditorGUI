@@ -33,10 +33,10 @@ public class EditAttributesMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		String attr = ByteBufUtils.readUTF8String(buf);
 		String[] part;
-		while(attr != null && !attr.equals("")) {
+		while (attr != null && !attr.equals("")) {
 			part = attr.split(":");
-			attributes.add(new ItemAttribute(AttributeHelper.getAttributeFromName(part[0]),
-					Double.parseDouble(part[1]), Integer.parseInt(part[2]), part[3]));
+			attributes.add(new ItemAttribute(AttributeHelper.getAttributeFromName(part[0]), Double.parseDouble(part[1]),
+					Integer.parseInt(part[2]), part[3]));
 			attr = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
 		}
 	}
@@ -44,8 +44,8 @@ public class EditAttributesMessage implements IMessage {
 	@Override
 	public void toBytes(ByteBuf buf) {
 		for (ItemAttribute attr : attributes)
-			ByteBufUtils.writeUTF8String(buf,attr.getAttribute().getName() + ":" + attr.getAmount() + ":" + attr.getOperation() + ":"
-					+ attr.getSlot());
+			ByteBufUtils.writeUTF8String(buf, attr.getAttribute().getName() + ":" + attr.getAmount() + ":"
+					+ attr.getOperation() + ":" + attr.getSlot());
 	}
 
 	public static class EditAttributesMessageHandler implements IMessageHandler<EditAttributesMessage, IMessage> {

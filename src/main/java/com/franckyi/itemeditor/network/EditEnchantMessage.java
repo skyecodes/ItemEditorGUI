@@ -30,7 +30,7 @@ public class EditEnchantMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		String ench = ByteBufUtils.readUTF8String(buf);
 		String[] part;
-		while (ench != null && !ench.equals("")){
+		while (ench != null && !ench.equals("")) {
 			part = ench.split(":");
 			enchants.add(new ItemEnchantment(Integer.parseInt(part[0]), Integer.parseInt(part[1])));
 			ench = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";

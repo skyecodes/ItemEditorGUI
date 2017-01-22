@@ -8,12 +8,11 @@ import net.minecraft.client.gui.GuiScreen;
 public abstract class GuiUpdaterScreen extends GuiScreen {
 
 	protected GuiButton cancelButton, doneButton;
-	
+
 	protected int previousScreen;
 	protected boolean doesGuiPauseGame;
 	protected Object modInstance;
-	
-	
+
 	public GuiUpdaterScreen(int previousScreen, boolean doesGuiPauseGame, Object modInstance) {
 		this.previousScreen = previousScreen;
 		this.doesGuiPauseGame = doesGuiPauseGame;

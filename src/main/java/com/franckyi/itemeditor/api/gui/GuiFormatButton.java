@@ -4,7 +4,6 @@ import com.franckyi.itemeditor.ItemEditorMod;
 import com.franckyi.itemeditor.ModReference;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -25,14 +24,10 @@ public class GuiFormatButton extends GuiZButton {
 		this.setZLevel(zLevel);
 	}
 
-
-
 	public GuiFormatButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText) {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {

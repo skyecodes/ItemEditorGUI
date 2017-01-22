@@ -12,9 +12,9 @@ import com.franckyi.itemeditor.helper.AttributeHelper;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeOperation;
 import com.franckyi.itemeditor.helper.AttributeHelper.EnumAttributeSlot;
 import com.franckyi.itemeditor.helper.AttributeHelper.ItemAttribute;
+import com.franckyi.itemeditor.helper.ModHelper;
 import com.franckyi.itemeditor.network.EditAttributesMessage;
 import com.franckyi.itemeditor.network.ModPacketHandler;
-import com.franckyi.itemeditor.helper.ModHelper;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;

@@ -1,7 +1,6 @@
 package com.franckyi.itemeditor.network;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.franckyi.itemeditor.ItemEditorMod;
@@ -31,7 +30,7 @@ public class EditLoreMessage implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		String bufLore = ByteBufUtils.readUTF8String(buf);
-		while(bufLore != null && !bufLore.equals("")){
+		while (bufLore != null && !bufLore.equals("")) {
 			lores.add(bufLore);
 			bufLore = (buf.isReadable()) ? ByteBufUtils.readUTF8String(buf) : "";
 		}

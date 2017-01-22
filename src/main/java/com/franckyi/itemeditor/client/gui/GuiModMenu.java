@@ -46,8 +46,8 @@ public class GuiModMenu extends GuiScreen {
 				.add(this.displayButton = new GuiButton(0, this.width / 2 - 100, this.height / 2 - 55, "Display"));
 		this.buttonList.add(
 				this.enchantmentsButton = new GuiButton(1, this.width / 2 - 100, this.height / 2 - 25, "Enchantments"));
-		this.buttonList.add(this.attributesButton = new GuiButton(2, this.width / 2 - 100, this.height / 2 + 5,
-				"Attributes"));
+		this.buttonList
+				.add(this.attributesButton = new GuiButton(2, this.width / 2 - 100, this.height / 2 + 5, "Attributes"));
 		this.buttonList.add(
 				this.exitButton = new GuiButton(3, this.width / 2 - 50, this.height / 2 + 35, 100, 20, "§4Exit Menu"));
 		buttonList.add(compactButton = new GuiButton(4, width - 80, 0, 80, 20, "§6Compact Menu"));

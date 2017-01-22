@@ -30,7 +30,7 @@ public class EditHideFlagsMessage implements IMessage {
 	public void fromBytes(ByteBuf buf) {
 		String flag = ByteBufUtils.readUTF8String(buf);
 		String[] part;
-		while(flag != null && !flag.equals("")){
+		while (flag != null && !flag.equals("")) {
 			part = flag.split(":");
 			hideFlags.add(new ItemHideFlag(HideFlagHelper.getFlagFromValue(Integer.parseInt(part[0])),
 					Boolean.parseBoolean(part[1])));

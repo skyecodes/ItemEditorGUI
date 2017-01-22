@@ -11,7 +11,7 @@ public class ModReference {
 	public static final String SERVER_PROXY_CLASS = "com.franckyi.itemeditor.proxy.ServerProxy";
 
 	public static final String GUI_FACTORY_CLASS = "com.franckyi.itemeditor.client.gui.ModGuiFactory";
-	
+
 	public static final String UPDATE_JSON = "https://github.com/Franckyi/ItemEditorGUI/blob/master/update.json";
 
 }

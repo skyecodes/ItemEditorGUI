@@ -1,7 +1,6 @@
 package com.franckyi.itemeditor.client.gui;
 
 import com.franckyi.itemeditor.ItemEditorMod;
-import com.franckyi.itemeditor.config.ModConfiguration;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +35,8 @@ public class ModGuiHandler implements IGuiHandler {
 		case (ITEM_EDITOR_COMPACT):
 			int guiScale = new Integer(Minecraft.getMinecraft().gameSettings.guiScale);
 			Minecraft.getMinecraft().gameSettings.guiScale = getScaleFromWindowSize();
-			return new GuiCompactEditor(ITEM_EDITOR_MENU, guiScale, ItemEditorMod.config.pauseGame, ItemEditorMod.instance);
+			return new GuiCompactEditor(ITEM_EDITOR_MENU, guiScale, ItemEditorMod.config.pauseGame,
+					ItemEditorMod.instance);
 		default:
 			return null;
 		}

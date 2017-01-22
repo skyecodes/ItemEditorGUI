@@ -31,11 +31,12 @@ public class GuiEditLore extends GuiUpdaterScreen {
 
 	@Override
 	public void initGui() {
-		loreList = new GuiLoreList(mc, width/2, height/2, height/4, 3*height/4, width/4, 25, width, height, this);
-		for(LoreListEntry entry : loreList.getLoreList())
+		loreList = new GuiLoreList(mc, width / 2, height / 2, height / 4, 3 * height / 4, width / 4, 25, width, height,
+				this);
+		for (LoreListEntry entry : loreList.getLoreList())
 			buttonList.add(entry.getFormatButton());
-		buttonList.add(doneButton = new GuiButton(1, width/2 - 100, 3*height/4 + 15, 90, 20, "§2Done"));
-		buttonList.add(cancelButton = new GuiButton(2, width/2 + 10, 3*height/4 + 15, 90, 20, "§4Cancel"));
+		buttonList.add(doneButton = new GuiButton(1, width / 2 - 100, 3 * height / 4 + 15, 90, 20, "§2Done"));
+		buttonList.add(cancelButton = new GuiButton(2, width / 2 + 10, 3 * height / 4 + 15, 90, 20, "§4Cancel"));
 		loreList.getLoreList().get(0).getTextField().setFocused(true);
 	}
 
@@ -63,7 +64,7 @@ public class GuiEditLore extends GuiUpdaterScreen {
 	@Override
 	protected void updateServer() {
 		for (LoreListEntry entry : loreList.getLoreList())
-			if(!entry.getTextField().getText().equals(""))
+			if (!entry.getTextField().getText().equals(""))
 				loreMessage.add(entry.getTextField().getText());
 		ModPacketHandler.INSTANCE.sendToServer(new EditLoreMessage(loreMessage));
 	}

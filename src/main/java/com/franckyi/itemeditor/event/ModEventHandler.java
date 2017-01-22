@@ -45,8 +45,8 @@ public class ModEventHandler {
 									Minecraft.getMinecraft().world, (int) player.posX, (int) player.posY,
 									(int) player.posZ);
 						} else
-							player.sendMessage(new TextComponentString(
-									TextFormatting.RED + "[" + ModReference.NAME + "] You select an item in your inventory."));
+							player.sendMessage(new TextComponentString(TextFormatting.RED + "[" + ModReference.NAME
+									+ "] You select an item in your inventory."));
 			} else
 				player.sendMessage(new TextComponentString(
 						TextFormatting.RED + "[" + ModReference.NAME + "] You must be in Creative mode."));
