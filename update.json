@@ -1,10 +1,10 @@
 {
   "homepage": "https://minecraft.curseforge.com/projects/item-editor-gui",
   "1.11.2": {
-    "1.11.2-0.0.1.0": "First release, built against forge 1.11-13.19.1.2189",
-    "1.11.2-0.0.1.1": "Fixed colors not working",
-    "1.11.2-0.0.1.2": "Fixed crash when editing Lore (wrong import)",
-    "1.11.2-0.0.1.3": "Fixed crashing when adding enchantments on a server",
+    "1.11-0.0.1.0": "First release, built against forge 1.11-13.19.1.2189",
+    "1.11-0.0.1.1": "Fixed colors not working",
+    "1.11-0.0.1.2": "Fixed crash when editing Lore (wrong import)",
+    "1.11-0.0.1.3": "Fixed crashing when adding enchantments on a server",
     "1.11.2-0.0.1.4": "Updated forge to 1.11.2-13.20.0.2206",
     "1.11.2-0.0.2.0": "Added temporary buttons to scroll in the Enchantment list, added safeEnchantmentsFirst and globalEnchantmentsLast config options",
     "1.11.2-0.0.2.1": "Added config GUI - no need to restart the game or the world, changes apply directly !",
@@ -13,11 +13,14 @@
     "1.11.2-0.0.3.1": "Fixed crash when editing Hide Flags of a new item",
     "1.11.2-0.0.3.2": "Added support to all HideFlags, fixed minor bugs",
     "1.11.2-0.0.3.3": "Fixed button size in the 'Hide Flags' menu",
-    "1.11.2-0.1.0.0-beta1": "Rewrite : GUI system (internal only)\nRewrite : ItemStack gestion (intenal only)\nRewrite : Events - you can now edit an item from your inventory\nRewrite : Changed some class' names (internal only)\nAdded : Attribute Modifiers support\nAdded : Unbreakable item ("Enchantments" menu)\nAdded : Colors everywhere!\nAdded : Config option "pauseGame"\nRemoved : Client-side updates, they're now server-side only (no big changes)\nFix : Empty lore lines not removing\nFix : Localization issues",\n
-    "1.11.2-0.1.0.0-beta2": "Rewrite : Networking (internal only)\nAdded : List for the Lore section\nAdded : Format button texture\nAdded : More custom GUI classes (internal only)\nAdded : Forge auto-updater support",
+    "1.11.x-0.1.0.0-beta1": "Rewrite : GUI system (internal only)\nRewrite : ItemStack gestion (intenal only)\nRewrite : Events - you can now edit an item from your inventory\nRewrite : Changed some class' names (internal only)\nAdded : Attribute Modifiers support\nAdded : Unbreakable item ("Enchantments" menu)\nAdded : Colors everywhere!\nAdded : Config option "pauseGame"\nRemoved : Client-side updates, they're now server-side only (no big changes)\nFix : Empty lore lines not removing\nFix : Localization issues",\n
+    "1.11.x-0.1.0.0-beta2": "Rewrite : Networking (internal only)\nAdded : List for the Lore section\nAdded : Format button texture\nAdded : More custom GUI classes (internal only)\nAdded : Forge auto-updater support",
+    "1.11.x-0.1.0.0" : "Small fixes, first official release"
   },
   "promos": {
-    "1.11.2-latest": "1.11.x-0.1.0.0-beta2",
-    "1.11.2-recommended": "1.11.x-0.1.0.0-beta2",
+    "1.11.2-latest": "1.11.x-0.1.0.0",
+    "1.11.2-recommended": "1.11.x-0.1.0.0",
+    "1.11-latest": "1.11.x-0.1.0.0",
+    "1.11-recommended": "1.11.x-0.1.0.0",
   }
 }
