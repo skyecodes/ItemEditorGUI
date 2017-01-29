@@ -1,5 +1,5 @@
 {
-  "homepage": "https://minecraft.curseforge.com/projects/item-editor-gui",
+  "homepage": "https://minecraft.curseforge.com/projects/ibe-editor",
   "1.11.2": {
     "1.11-0.0.1.0": "First release, built against forge 1.11-13.19.1.2189",
     "1.11-0.0.1.1": "Fixed colors not working",
