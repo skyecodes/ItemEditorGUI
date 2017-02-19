@@ -1,5 +1,8 @@
 Changelog :
 
+1.11.x-0.1.0.1 :
+- Fix : Crash when pressing 'I' hotkey in main menus (#7)
+
 1.11.x-0.1.0.0 :
 - Rewrite : GUI system (internal only)
 - Rewrite : ItemStack gestion (intenal only)

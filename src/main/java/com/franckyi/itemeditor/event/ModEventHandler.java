@@ -30,7 +30,7 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public void onKeyPressed(KeyboardInputEvent.Post e) {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
-		if (Keyboard.getEventKey() == ClientProxy.keyBinding.getKeyCode() && Keyboard.getEventKeyState() == true)
+		if (Keyboard.getEventKey() == ClientProxy.keyBinding.getKeyCode() && Keyboard.getEventKeyState() == true && player != null)
 			if (e.getGui() instanceof GuiContainer
 					&& (Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)
 							|| !ItemEditorMod.config.creativeModeOnly)) {
@@ -55,8 +55,8 @@ public class ModEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onClientTick(ClientTickEvent e) {
-		if (ClientProxy.keyBinding.isPressed() && Minecraft.getMinecraft().currentScreen == null) {
-			EntityPlayerSP player = Minecraft.getMinecraft().player;
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		if (ClientProxy.keyBinding.isPressed() && Minecraft.getMinecraft().currentScreen == null && player != null) {
 			if (!player.getHeldItemMainhand().getItem().equals(Item.getItemFromBlock(Blocks.AIR))
 					&& (Minecraft.getMinecraft().playerController.getCurrentGameType().equals(GameType.CREATIVE)
 							|| !ItemEditorMod.config.creativeModeOnly)) {

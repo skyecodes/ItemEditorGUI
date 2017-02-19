@@ -15,17 +15,18 @@
     "1.11.2-0.0.3.3": "Fixed button size in the 'Hide Flags' menu",
     "1.11.x-0.1.0.0-beta1": "Rewrite : GUI system (internal only)\nRewrite : ItemStack gestion (intenal only)\nRewrite : Events - you can now edit an item from your inventory\nRewrite : Changed some class' names (internal only)\nAdded : Attribute Modifiers support\nAdded : Unbreakable item ('Enchantments' menu)\nAdded : Colors everywhere!\nAdded : Config option 'pauseGame'\nRemoved : Client-side updates, they're now server-side only (no big changes)\nFix : Empty lore lines not removing\nFix : Localization issues",
     "1.11.x-0.1.0.0-beta2": "Rewrite : Networking (internal only)\nAdded : List for the Lore section\nAdded : Format button texture\nAdded : More custom GUI classes (internal only)\nAdded : Forge auto-updater support",
-    "1.11.x-0.1.0.0" : "Small fixes, first official release"
+    "1.11.x-0.1.0.0" : "Small fixes, first official release",
+    "1.11.x-0.1.0.1" : "Fix crash when pressing 'I' hotkey in main menus (#7)"
   },
   "1.10.2" : {
     "1.10.x-0.1.0.0" : "Ported from 1.11.x-0.1.0.0",
     "1.10.x-0.1.0.1" : "Forced UTF-8 encoding"
   },
   "promos": {
-    "1.11.2-latest": "1.11.x-0.1.0.0",
-    "1.11.2-recommended": "1.11.x-0.1.0.0",
-    "1.11-latest": "1.11.x-0.1.0.0",
-    "1.11-recommended": "1.11.x-0.1.0.0",
+    "1.11.2-latest": "1.11.x-0.1.0.1",
+    "1.11.2-recommended": "1.11.x-0.1.0.1",
+    "1.11-latest": "1.11.x-0.1.0.1",
+    "1.11-recommended": "1.11.x-0.1.0.1",
     "1.10.2-latest": "1.10.x-0.1.0.1",
     "1.10.2-recommended": "1.10.x-0.1.0.1",
     "1.10-latest": "1.10.x-0.1.0.1",
