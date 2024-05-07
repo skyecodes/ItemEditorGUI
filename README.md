@@ -1,3 +1,5 @@
+# The project has moved to [IBE Editor](https://github.com/skyecodes/IBE-Editor).
+
 # ItemEditorGUI
 Item Editor GUI is a useful client-side mod for mapmakers. Simple GUIs system makes it very easy to use !
 
